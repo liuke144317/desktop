@@ -136,8 +136,15 @@
           <div class="sc-left iconfont icon-icon-arrow-left2" @click="initSlider('left')" style="display: none;"></div>
           <div class="sc-center" style="justify-content: center;">
             <div class="m-slider" style="transform: translate(0px, 0px);">
-
-              <span class="nvabox-trigger" data-trigger="nvabox-park" sapplytype="综合查询" style="background-color: rgb(28, 98, 170)"><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png"><span class="text">综合查询</span></span><span class="nvabox-trigger" data-trigger="nvabox-park" sapplytype="园区租赁" style=""><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png"><span class="text">园区租赁</span></span><span class="nvabox-trigger" data-trigger="nvabox-park" sapplytype="园区资产与维修" style=""><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png"><span class="text">园区资产与维修</span></span><span class="nvabox-trigger" data-trigger="nvabox-park" sapplytype="基础信息" style=""><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png"><span class="text">基础信息</span></span><span class="nvabox-trigger" data-trigger="nvabox-park" sapplytype="系统管理" style=""><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png"><span class="text">系统管理</span></span><span id="trigger-user" data-trigger="nvabox-user"><img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/user.png"><span class="text">个人用户</span></span></div>
+              <span v-for="(item,index) in navData" class="nvabox-trigger" data-trigger="nvabox-park" :sapplytype="item.sapplytype" :style="index === 0 ? 'background-color: rgb(28, 98, 170)':''">
+                <img :src="item.imgSrc">
+                <span class="text">{{item.text}}</span>
+              </span>
+              <span id="trigger-user" data-trigger="nvabox-user">
+                <img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/user.png">
+                <span class="text">个人用户</span>
+              </span>
+            </div>
           </div>
           <div class="sc-right iconfont icon-icon-arrow-left2-copy" @click="initSlider('right')" style="display: none;"></div>
         </div>
@@ -158,22 +165,20 @@
 <script>
   export default {
     name: 'Login',
-    data () {
-      return {}
-    },
+    props: ['navData'],
     methods: {
       // 初始化左右滑块
       initSlider: function (handle) {
         // 获取sc-center宽度offsetWidth
-        var maxWidth = document.querySelector('.sc-center').offsetWidth
+        let maxWidth = document.querySelector('.sc-center').offsetWidth
         // 获取m-slider宽度
-        var sliderWidth = document.querySelector('.m-slider').offsetWidth
+        let sliderWidth = document.querySelector('.m-slider').offsetWidth
         // 获取每个tab方块宽度
-        var tabWidth = document.querySelector('.nvabox-trigger').offsetWidth
+        let tabWidth = document.querySelector('.nvabox-trigger').offsetWidth
         // 偏移量
-        var offset = 0
+        let offset = 0
         // var sliderTransform = $('.m-slider').css('transform')
-        var sliderTransform = document.querySelector('.m-slider').style.transform
+        let sliderTransform = document.querySelector('.m-slider').style.transform
         console.log('sliderTransform.indexOf(\'(\')', sliderTransform.indexOf('('))
         if (sliderTransform !== '' && sliderTransform !== undefined && sliderTransform !== 'none') {
           console.log('sliderTransform.substring(sliderTransform.indexOf(\'(\') + 1, sliderTransform.indexOf(\')\'))', sliderTransform.substring(10, sliderTransform.indexOf('p')))
@@ -195,7 +200,7 @@
           }
           return false
         }
-        var isClick = document.querySelector('.slider-container').getAttribute('is_click')
+        let isClick = document.querySelector('.slider-container').getAttribute('is_click')
         document.querySelector('.slider-container').setAttribute('is_click', '1')
         if (isClick === '1') {
           return false
@@ -203,7 +208,7 @@
         setTimeout(function () {
           document.querySelector('.slider-container').setAttribute('is_click', '0')
         }, 400)
-        var newoffset = 0
+        let newoffset = 0
         if (handle === 'left') {
           document.querySelector('.sc-right').style.display = 'block'
           newoffset = parseInt(offset) + (parseInt(maxWidth / tabWidth) * tabWidth)
@@ -229,6 +234,7 @@
       window.onresize = function () {
         _t.initSlider()
       }
+      this.$emit('')
     },
     mounted () {
       this.initSlider()

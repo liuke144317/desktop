@@ -39,7 +39,7 @@
          SplitScreen: components.SplitScreen
         }"
       >
-        <component solt="nav-slider" :is="components.NavSlider"></component>
+        <component solt="nav-slider" :is="components.NavSlider" :navData="filterNavData"></component>
         <component :is="components.TaskBar">
           <component :is="components.StartMenu" slot="StartMenu"></component>
           <component :is="components.TaskBarIconBox" slot="TaskBarIconBox"></component>
@@ -65,13 +65,29 @@
         busTypes: {
           'desktop/left/click': 'desktop/left/click',
           'desktop/right/click': 'desktop/right/click'
-        }
+        },
+        'navData': [
+          {'sapplytype': '综合查询', 'imgSrc': 'http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png', 'text': '综合查询'},
+          {'sapplytype': '园区租赁', 'imgSrc': 'http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png', 'text': '园区租赁'},
+          {'sapplytype': '园区资产与维修', 'imgSrc': 'http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png', 'text': '园区资产与维修'},
+          {'sapplytype': '基础信息', 'imgSrc': 'http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png', 'text': '基础信息'},
+          {'sapplytype': '系统管理', 'imgSrc': 'http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/icon-desktop-park-lease.png', 'text': '系统管理'}
+        ]
       }
     },
     computed: {
       ...mapState(moduleName, {
         userInfo: state => state.userInfo
-      })
+      }),
+      filterNavData: function () {
+        let arr = []
+        for (let i = 0; i < this.navData.length; i++) {
+          if (this.navData[i].sapplytype && this.navData[i].sapplytype !== '') {
+            arr.push(this.navData[i])
+          }
+        }
+        return arr
+      }
     },
     methods: {
       handleComponents: async function () {
