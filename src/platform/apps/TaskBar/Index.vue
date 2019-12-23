@@ -71,7 +71,7 @@
       <!--<WallpaperBackground></WallpaperBackground>-->
     <!--</div>-->
     <div class="app-task-bar-main">
-      <!--<slot name="StartMenu"></slot>-->
+      <slot name="StartMenu"></slot>
       <slot name="TaskBarIconBox"></slot>
       <slot name="TaskBarWidget"></slot>
     </div>

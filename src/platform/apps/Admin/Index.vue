@@ -81,141 +81,141 @@
                 handler: 'platform/refresh'
               }
             },
-            {
-              name: 'iconSort',
-              icon: {
-                type: '',
-                style: ''
-              },
-              text: '排序方式',
-              enable: true,
-              children: [
-                {
-                  name: 'top-bottom-left-right',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从上往下，从左往右',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'top-bottom-left-right'
-                  }
-                },
-                {
-                  name: 'top-bottom-right-left',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从上往下，从右往左',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'top-bottom-right-left'
-                  }
-                },
-                {
-                  name: 'bottom-top-left-right',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从下往上，从左往右',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'bottom-top-left-right'
-                  }
-                },
-                {
-                  name: 'bottom-top-right-left',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从下往上，从右往左',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'bottom-top-right-left'
-                  }
-                },
-                {
-                  name: 'left-right-top-bottom',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从左往右，从上往下',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'left-right-top-bottom'
-                  }
-                },
-                {
-                  name: 'left-right-bottom-top',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从左往右，从下往上',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'left-right-bottom-top'
-                  }
-                },
-                {
-                  name: 'right-left-top-bottom',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从右往左，从上往下',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'right-left-top-bottom'
-                  }
-                },
-                {
-                  name: 'right-left-bottom-top',
-                  icon: {
-                    type: '',
-                    style: ''
-                  },
-                  text: '从右往左，从下往上',
-                  enable: true,
-                  style: {},
-                  action: {
-                    type: 'bus',
-                    handler: 'platform/desktopIcon/sort',
-                    params: 'right-left-bottom-top'
-                  }
-                }
-              ],
-              childrenStyle: {
-                width: '160px',
-                marginRight: '-160px'
-              }
-            },
+            // {
+            //   name: 'iconSort',
+            //   icon: {
+            //     type: '',
+            //     style: ''
+            //   },
+            //   text: '排序方式',
+            //   enable: true,
+            //   children: [
+            //     {
+            //       name: 'top-bottom-left-right',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从上往下，从左往右',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'top-bottom-left-right'
+            //       }
+            //     },
+            //     {
+            //       name: 'top-bottom-right-left',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从上往下，从右往左',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'top-bottom-right-left'
+            //       }
+            //     },
+            //     {
+            //       name: 'bottom-top-left-right',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从下往上，从左往右',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'bottom-top-left-right'
+            //       }
+            //     },
+            //     {
+            //       name: 'bottom-top-right-left',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从下往上，从右往左',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'bottom-top-right-left'
+            //       }
+            //     },
+            //     {
+            //       name: 'left-right-top-bottom',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从左往右，从上往下',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'left-right-top-bottom'
+            //       }
+            //     },
+            //     {
+            //       name: 'left-right-bottom-top',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从左往右，从下往上',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'left-right-bottom-top'
+            //       }
+            //     },
+            //     {
+            //       name: 'right-left-top-bottom',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从右往左，从上往下',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'right-left-top-bottom'
+            //       }
+            //     },
+            //     {
+            //       name: 'right-left-bottom-top',
+            //       icon: {
+            //         type: '',
+            //         style: ''
+            //       },
+            //       text: '从右往左，从下往上',
+            //       enable: true,
+            //       style: {},
+            //       action: {
+            //         type: 'bus',
+            //         handler: 'platform/desktopIcon/sort',
+            //         params: 'right-left-bottom-top'
+            //       }
+            //     }
+            //   ],
+            //   childrenStyle: {
+            //     width: '160px',
+            //     marginRight: '-160px'
+            //   }
+            // },
             {
               name: 'fullScreen',
               icon: {
@@ -289,11 +289,11 @@
         let _t = this
         // TODO 1.分发action，获取用户应用数据
         let res = await _t.$store.dispatch(_t.$utils.store.getType('Admin/user/application/list', 'Platform'))
+        console.log('res', res)
         if (!res || res.status !== 200) {
           _t.$Message.error('获取用户应用列表失败')
           return
         }
-        console.log('获取应用列表', JSON.parse(res.data.list[0].config))
         let appData = {
           list: [],
           iconList: [],

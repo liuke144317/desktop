@@ -179,10 +179,7 @@
         let offset = 0
         // var sliderTransform = $('.m-slider').css('transform')
         let sliderTransform = document.querySelector('.m-slider').style.transform
-        console.log('sliderTransform.indexOf(\'(\')', sliderTransform.indexOf('('))
         if (sliderTransform !== '' && sliderTransform !== undefined && sliderTransform !== 'none') {
-          console.log('sliderTransform.substring(sliderTransform.indexOf(\'(\') + 1, sliderTransform.indexOf(\')\'))', sliderTransform.substring(10, sliderTransform.indexOf('p')))
-          // offset = sliderTransform.substring(sliderTransform.indexOf('(') + 1, sliderTransform.indexOf(')')).split(',')[4]
           offset = sliderTransform.substring(sliderTransform.indexOf('(') + 1, sliderTransform.indexOf('p'))
         }
         if (handle === undefined) {
