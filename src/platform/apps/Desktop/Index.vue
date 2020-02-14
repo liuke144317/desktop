@@ -633,7 +633,6 @@
         let _t = this
         let {action, data} = tmpInfo
         iconList = iconList || [..._t.appData.iconList]
-        console.log('handleWindowTrigger', 'action:', action, 'data:', data)
         // 查找单个索引
         let findAppIndex = function (iconList, condition) {
           return iconList.findIndex((item) => {
@@ -675,7 +674,9 @@
           }
           return iconList
         }
+        // 双击打开图标
         let handleOpenByTaskBarIcon = function (data) {
+          console.log('打开窗口')
           // let timeNow = new Date().getTime()
           let appInfo = data.appInfo || {}
           if (!Object.keys(appInfo).length || !appInfo.config.window) {
@@ -828,7 +829,6 @@
                       delete item.action
                       delete item.installed
                       let _itemIndex = findAppIndex(_t._appData.iconList, (item) => item.config.app.name === appInfo.config.app.name)
-                      console.log('_itemIndex', _itemIndex)
                       let _item = _t._appData.iconList[_itemIndex]
                       item.config.window = {
                         ..._item.config.window
@@ -981,7 +981,6 @@
           if (currentAppIndex < 0) {
             return
           }
-          console.log('currentAppIndex', currentAppIndex)
           let currentStyle = JSON.parse(JSON.stringify(iconList[currentAppIndex].config['window']['style'] || {}))
           let currentSize = iconList[currentAppIndex].config['window']['size']
           let oldStyle = JSON.parse(JSON.stringify(iconList[currentAppIndex].config['window']['oldStyle'] || {}))
@@ -1113,7 +1112,6 @@
       handleAppInstallOrUninstall: function (tmpInfo) {
         let _t = this
         let appInfo = tmpInfo.data.appInfo
-        console.log('appInfo', appInfo)
         // 打开安装/卸载界面
         let openWindow = function () {
           let iconList = [..._t.appData.iconList]
@@ -1131,7 +1129,6 @@
           }
           _t.handleWindowTrigger(tmpInfo, iconList)
         }
-        console.log('tmpInfo.action', tmpInfo.action)
         // 根据当前操作执行不同逻辑
         switch (tmpInfo.action) {
           // 打开安装/卸载界面
@@ -1156,7 +1153,6 @@
         let res = await _t.$store.dispatch('Platform/Desktop/application/install', {
           id: appInfo.appID
         })
-        console.log('doApplicationInstall', res)
         if (!res || res.status !== 200) {
           // _t.$Message.error('安装失败！')
           callback && callback(false)
@@ -1174,7 +1170,6 @@
       // 执行卸载操作
       doApplicationUninstall: async function (appInfo, callback) {
         let _t = this
-        console.log('appInfo', appInfo)
         // 分发action，调接口
         let res = await _t.$store.dispatch('Platform/Desktop/application/uninstall', {
           // 用户应用列表索引ID
@@ -1184,7 +1179,6 @@
           // 用户ID
           user_id: _t.userInfo.id
         })
-        console.log('doApplicationUninstall', res)
         if (!res || res.status !== 200) {
           // _t.$Message.error('卸载失败！')
           callback && callback(false)
