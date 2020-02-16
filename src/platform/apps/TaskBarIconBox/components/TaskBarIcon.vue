@@ -203,7 +203,7 @@
 
 <template>
   <div
-    v-if="info.config.window.status === 'open' || info.config.taskBar.isPinned"
+    v-if="info.config.window.status === 'open'"
     class="task-bar-icon"
     :class="{ 'task-bar-icon-pinned': info.config.taskBar.isPinned }"
     @mousedown.left.stop.prevent="onIconMouseDown"
