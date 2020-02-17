@@ -677,6 +677,7 @@
         // 双击打开图标
         let handleOpenByTaskBarIcon = function (data) {
           console.log('打开窗口')
+          debugger
           // let timeNow = new Date().getTime()
           let appInfo = data.appInfo || {}
           if (!Object.keys(appInfo).length || !appInfo.config.window) {
@@ -1059,7 +1060,7 @@
             iconList: iconList
           })
         }
-        // 处理窗口max-widht && max-height
+        // 处理窗口max-width && max-height
         let handleWindowMaxWidthHeight = function (style) {
           let bodyHeight = document.body.offsetHeight
           let bodyWidth = document.body.offsetWidth
