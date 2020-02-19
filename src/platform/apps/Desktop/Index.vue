@@ -676,8 +676,6 @@
         }
         // 双击打开图标
         let handleOpenByTaskBarIcon = function (data) {
-          console.log('打开窗口')
-          debugger
           // let timeNow = new Date().getTime()
           let appInfo = data.appInfo || {}
           if (!Object.keys(appInfo).length || !appInfo.config.window) {
@@ -737,13 +735,15 @@
                 iconList[currentAppIndex].config['window']['style'] = _t.windowStyleBySize['min']
                 iconList[currentAppIndex].config['window']['size'] = 'min'
                 // 处理left值
-                let taskBarList = findAllIndex(iconList, (item) => item.config.window.status === 'open' || item.config.taskBar.isPinned)
+                let taskBarList = findAllIndex(iconList, (item) => item.config.window.status === 'open')
                 if (taskBarList.length) {
                   let taskBarIndex = taskBarList.indexOf(currentAppIndex)
+                  let bodyWidth = document.body.offsetWidth
                   // FIXME 每个任务栏图标实际宽度 62px
                   iconList[currentAppIndex].config['window']['style'] = {
                     ...iconList[currentAppIndex].config['window']['style'],
-                    left: 62 * (taskBarIndex + 1) + 'px'
+                    // left: 62 * (taskBarIndex + 1) + 'px'
+                    left: bodyWidth - 62 * (taskBarList.length - taskBarIndex) + 'px'
                   }
                 }
               } else {
@@ -782,13 +782,15 @@
               iconList[currentAppIndex].config['window']['style'] = _t.windowStyleBySize['min']
               iconList[currentAppIndex].config['window']['size'] = 'min'
               // 处理left值
-              let taskBarList = findAllIndex(iconList, (item) => item.config.window.status === 'open' || item.config.taskBar.isPinned)
+              let taskBarList = findAllIndex(iconList, (item) => item.config.window.status === 'open')
               if (taskBarList.length) {
                 let taskBarIndex = taskBarList.indexOf(currentAppIndex)
+                let bodyWidth = document.body.offsetWidth
                 // FIXME 每个任务栏图标实际宽度 62px
                 iconList[currentAppIndex].config['window']['style'] = {
                   ...iconList[currentAppIndex].config['window']['style'],
-                  left: 62 * (taskBarIndex + 1) + 'px'
+                  // left: 62 * (taskBarIndex + 1) + 'px'
+                  left: bodyWidth - 62 * (taskBarList.length - taskBarIndex) + 'px'
                 }
               }
               break

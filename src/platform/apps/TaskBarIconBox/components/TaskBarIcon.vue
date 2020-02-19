@@ -421,19 +421,6 @@
                   }
                 }
               },
-              {
-                name: 'openAppInNewBrowserTab',
-                icon: {
-                  type: '',
-                  style: ''
-                },
-                text: '在新标签页中打开',
-                enable: _t.info.config.window.type === 'iframe' && _t.info.config.app.url,
-                action: {
-                  type: 'bus',
-                  handler: 'platform/app/openInNewBrowserTab'
-                }
-              },
               (() => {
                 if (!['install', 'uninstall'].includes(_t.info.action)) {
                   return {
@@ -465,39 +452,6 @@
                   }
                 }
                 return {}
-              })(),
-              (() => {
-                if (_t.info.config.taskBar.isPinned) {
-                  return {
-                    name: 'unpinToTaskBar',
-                    icon: {
-                      type: '',
-                      style: ''
-                    },
-                    text: '将此程序从任务栏解锁',
-                    enable: _t.info.config.taskBar.isPinned,
-                    action: {
-                      type: 'bus',
-                      handler: 'platform/taskBar/unpin'
-                    }
-                  }
-                } else {
-                  return {
-                    name: 'pinToTaskBar',
-                    icon: {
-                      type: '',
-                      style: {
-                        transform: 'rotate(90deg)'
-                      }
-                    },
-                    text: '将此程序锁定到任务栏',
-                    enable: !_t.info.config.taskBar.isPinned,
-                    action: {
-                      type: 'bus',
-                      handler: 'platform/taskBar/pin'
-                    }
-                  }
-                }
               })()
             ]
           }

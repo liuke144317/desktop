@@ -300,19 +300,6 @@
               }
             },
             {
-              name: 'openAppInNewBrowserTab',
-              icon: {
-                type: '',
-                style: ''
-              },
-              text: '在新标签页中打开',
-              enable: _t.info.config.window.type === 'iframe' && _t.info.config.app.url,
-              action: {
-                type: 'bus',
-                handler: 'platform/app/openInNewBrowserTab'
-              }
-            },
-            {
               name: 'uninstallApp',
               icon: {
                 type: '',

@@ -140,7 +140,7 @@
                 <img :src="item.imgSrc">
                 <span class="text">{{item.text}}</span>
               </span>
-              <span id="trigger-user" data-trigger="nvabox-user">
+              <span id="trigger-user" data-trigger="nvabox-user" @click.stop="openUserInfo">
                 <img src="http://m.sukeintel.com:9017/zdrjypsm/static/login/open/themes/images/v3/user.png">
                 <span class="text">个人用户</span>
               </span>
@@ -163,9 +163,15 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     name: 'Login',
     props: ['navData'],
+    computed: {
+      ...mapState('Platform/Admin', {
+        appData: state => state.appData
+      })
+    },
     methods: {
       // 初始化左右滑块
       initSlider: function (handle) {
@@ -224,6 +230,14 @@
           }
         }
         document.querySelector('.m-slider').style.transform = 'translate(' + newoffset + 'px,0px)'
+      },
+      openUserInfo: function () {
+        let _t = this
+        let iconList = ''
+        _t.$store.commit(_t.$utils.store.getType('Admin/appData/set', 'Platform'), {
+          ..._t.appData,
+          iconList: iconList
+        })
       }
     },
     created () {
