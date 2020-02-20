@@ -142,9 +142,10 @@
           // 分屏模式
           type: ''
         },
+        // 个人用户
         userSetting: {
           app_category: ' ',
-          app_description: '搜罗所有应用。',
+          app_description: '个人用户',
           app_id: 2,
           app_name: 'ApplicationMarket',
           app_publish: 1,
@@ -225,12 +226,9 @@
     },
     computed: {
       ...mapState('Platform/Admin', {
-        appData: state => {
-          console.log('state.appData', state.appData)
-          return state.appData
+        appData: function (state) {
+          return {iconList: [...state.appData.iconList, this.userSetting], list: state.appData.list}
         },
-        // appData: state => ({iconList: [...state.appData.iconList, this.userSetting], list: state.appData.list}),
-        // _appData: state => ({iconList: [...state._appData.iconList, this.userSetting], list: state._appData.list})
         _appData: state => state._appData
       }),
       ...mapState('Platform', {
@@ -760,9 +758,9 @@
         }
         // 双击打开图标
         let handleOpenByTaskBarIcon = function (data) {
-          let obj = {iconList: [..._t.appData.iconList, this.userSetting], list: _t.appData.list}
+          let obj = {iconList: [..._t.appData.iconList, _t.userSetting], list: _t.appData.list}
           console.log('obj', obj)
-          console.log('_t.appData', _t.appData)
+          // console.log('_t.appData', _t.appData)
           // let timeNow = new Date().getTime()
           let appInfo = data.appInfo || {}
           if (!Object.keys(appInfo).length || !appInfo.config.window) {
