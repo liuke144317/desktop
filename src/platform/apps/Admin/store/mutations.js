@@ -4,7 +4,6 @@
 
 export default {
   'appData/set': (state, data) => {
-    console.log('data123', data)
     state.appData = JSON.parse(JSON.stringify(data))
   },
   'appData/backup': (state, data) => {

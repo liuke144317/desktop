@@ -141,12 +141,96 @@
           enable: false,
           // 分屏模式
           type: ''
+        },
+        userSetting: {
+          app_category: ' ',
+          app_description: '搜罗所有应用。',
+          app_id: 2,
+          app_name: 'ApplicationMarket',
+          app_publish: 1,
+          app_title: '应用市场',
+          app_type: 0,
+          config: {
+            app: {
+              icon: './static/apps/ApplicationMarket/logo.png',
+              id: '',
+              name: 'ApplicationMarket',
+              title: '应用市场'
+            },
+            desktopIcon: {
+              style: {
+                left: '0px',
+                top: '0px'
+              }
+            },
+            install: {
+              taskBar: {
+                isPinned: false
+              },
+              window: {
+                enableResize: ['custom', 'close'],
+                size: 'custom',
+                status: 'close',
+                style: {
+                  height: '300px',
+                  left: 'calc(50% - 200px)',
+                  top: 'calc(50% - 150px)',
+                  width: '400px'
+                },
+                type: 'modal'
+              }
+            },
+            taskBar: {
+              isPinned: true
+            },
+            uninstall: {
+              taskBar: {
+                isPinned: false
+              },
+              window: {
+                enableResize: ['custom', 'close'],
+                size: 'custom',
+                status: 'close',
+                style: {
+                  height: '300px',
+                  left: 'calc(50% - 200px)',
+                  top: 'calc(50% - 150px)',
+                  width: '400px'
+                },
+                type: 'modal'
+              }
+            },
+            window: {
+              enableResize: ['custom', 'small', 'min', 'max', 'middle', 'reset', 'close'],
+              size: 'custom',
+              status: 'close',
+              style: {
+                height: '800px',
+                left: 'calc(50% - 500px)',
+                top: 'calc(50% - 400px)',
+                width: '1000px'
+              },
+              type: 'modal'
+            }
+          },
+          create_time: '2017-07-14T17:06:06.000Z',
+          id: 2,
+          private: 0,
+          status: 1,
+          update_time: '2017-11-13T08:56:47.000Z',
+          user_id: 1,
+          user_type: 0
         }
       }
     },
     computed: {
       ...mapState('Platform/Admin', {
-        appData: state => state.appData,
+        appData: state => {
+          console.log('state.appData', state.appData)
+          return state.appData
+        },
+        // appData: state => ({iconList: [...state.appData.iconList, this.userSetting], list: state.appData.list}),
+        // _appData: state => ({iconList: [...state._appData.iconList, this.userSetting], list: state._appData.list})
         _appData: state => state._appData
       }),
       ...mapState('Platform', {
@@ -676,6 +760,9 @@
         }
         // 双击打开图标
         let handleOpenByTaskBarIcon = function (data) {
+          let obj = {iconList: [..._t.appData.iconList, this.userSetting], list: _t.appData.list}
+          console.log('obj', obj)
+          console.log('_t.appData', _t.appData)
           // let timeNow = new Date().getTime()
           let appInfo = data.appInfo || {}
           if (!Object.keys(appInfo).length || !appInfo.config.window) {
