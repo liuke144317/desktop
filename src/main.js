@@ -29,7 +29,6 @@ import globalComponents from './global/components'
 
 import '../static/iconfont/iconfont.css'
 globalComponents.register(Vue)
-
 // 导入 全局插件
 // import plugin from './global/plugin'
 

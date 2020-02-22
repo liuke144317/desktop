@@ -34,6 +34,28 @@
 
   export default {
     name: 'Admin',
+    data () {
+      return {
+        // 个人用户
+        userSetting: {
+          app_category: ' ',
+          app_description: '个人用户',
+          app_id: '',
+          app_name: 'TestLogin',
+          app_publish: 1,
+          app_title: '个人用户',
+          app_type: 0,
+          config: '{"app":{"icon":"./static/apps/UserInfo/logo.jpg","id":"","name":"UserInfo","title":"个人用户"},"desktopIcon":{"style":{"left":"0px","top":"0px"}},"install":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"taskBar":{"isPinned":true},"uninstall":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"window":{"enableResize":["custom","small","min","max","middle","reset","close"],"size":"custom","status":"close","style":{"height":"100%","left":"calc(50% - 500px)","top":"calc(50% - 400px)","width":"100%"},"type":"modal"}}',
+          create_time: '2017-07-14T17:06:06.000Z',
+          id: '',
+          private: 0,
+          status: 1,
+          update_time: '2017-11-13T08:56:47.000Z',
+          user_id: 1,
+          user_type: 0
+        }
+      }
+    },
     computed: {
       ...mapState(moduleName, {
         userInfo: state => {
@@ -289,6 +311,7 @@
         let _t = this
         // TODO 1.分发action，获取用户应用数据
         let res = await _t.$store.dispatch(_t.$utils.store.getType('Admin/user/application/list', 'Platform'))
+        res.data.list = [...res.data.list, this.userSetting]
         console.log('res', res)
         if (!res || res.status !== 200) {
           _t.$Message.error('获取用户应用列表失败')
