@@ -5,7 +5,7 @@
 
 <style lang="less" rel="stylesheet/less">
   .task-bar-icon {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 60px;
     height: 39px;
     margin: 0 1px;

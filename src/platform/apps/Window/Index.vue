@@ -284,6 +284,9 @@
         required: true
       }
     },
+    created () {
+      console.log('this.info', this.info)
+    },
     data () {
       let _t = this
       return {

@@ -43,7 +43,9 @@
         :info="item"
         :showTitle="appData.showTitle"
         :style="item.config.desktopIcon.style"
-      ></component>
+      >
+
+      </component>
       <component :is="childComponents.DesktopWidget"></component>
       <component
         :is="childComponents.Window"
@@ -54,8 +56,9 @@
       <component :is="childComponents.Wallpaper" switchType="bing" :style="{ 'z-index': 1000 }"></component>
       <!-- 分屏组件 -->
       <component :is="childComponents.SplitScreen" :data="splitScreenData"></component>
+      <slot name="taskBar"></slot>
     </div>
-    <slot></slot>
+    <slot name="nav-slider"></slot>
   </div>
 </template>
 
@@ -108,10 +111,11 @@
 //            'margin-top': '-300px'
           },
           max: {
+            position: 'fixed',
             // width: 'auto',
             // height: 'auto',
             width: 'calc(100%)',
-            height: 'calc(100% - 40px)',
+            height: 'calc(100%)',
             left: 0,
             top: 0
             // right: 0,
@@ -652,7 +656,7 @@
         }
         // 处理已打开窗口层级
         let handleOpenedWindowZIndex = function (iconList, currentAppIndex) {
-          let defZIndex = 2000
+          let defZIndex = 3000
           // 查找已打开的window的index
           let openedWindowIndexArr = findAllIndex(iconList, (item) => item.config.window.status === 'open' && item.config.window.size !== 'min')
           // 处理z-index
@@ -1066,9 +1070,13 @@
         let handleWindowMaxWidthHeight = function (style) {
           let bodyHeight = document.body.offsetHeight
           let bodyWidth = document.body.offsetWidth
-          let maxHeight = Math.ceil(bodyHeight * 0.8)
+          // let maxHeight = Math.ceil(bodyHeight * 0.8)
+          // let top = Math.ceil(maxHeight / 2)
+          // let maxWidth = Math.ceil(bodyWidth * 0.8)
+          // let left = Math.ceil(maxWidth / 2)
+          let maxHeight = bodyHeight
           let top = Math.ceil(maxHeight / 2)
-          let maxWidth = Math.ceil(bodyWidth * 0.8)
+          let maxWidth = bodyWidth
           let left = Math.ceil(maxWidth / 2)
           if (style.hasOwnProperty('height') && parseInt(style['height']) > maxHeight) {
             style.height = maxHeight + 'px'

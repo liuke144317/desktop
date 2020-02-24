@@ -39,8 +39,8 @@
          SplitScreen: components.SplitScreen
         }"
       >
-        <component solt="nav-slider" :is="components.NavSlider" :navData="filterNavData"></component>
-        <component :is="components.TaskBar">
+        <component slot="nav-slider" :is="components.NavSlider" :navData="filterNavData"></component>
+        <component slot="taskBar" :is="components.TaskBar">
           <!--<component :is="components.StartMenu" slot="StartMenu"></component>-->
           <component :is="components.TaskBarIconBox" slot="TaskBarIconBox"></component>
           <component :is="components.TaskBarWidget" slot="TaskBarWidget"></component>

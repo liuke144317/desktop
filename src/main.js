@@ -7,6 +7,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
+import {post, get} from '@/global/utils/https'
 // 导入UI库
 import iView from 'iview'
 import './themes/index.less'
@@ -124,6 +125,8 @@ axiosInstance.interceptors.response.use(function (response) {
 
 // 注册 $http
 Vue.prototype.$http = axiosInstance
+Vue.prototype.$get = get
+Vue.prototype.$post = post
 
 // 创建 store 实例
 const storeInstance = new Vuex.Store({

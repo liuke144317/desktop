@@ -131,7 +131,6 @@
             _t.loadStatus = isSuccess ? 'success' : 'fail'
           })
         }
-        console.log('loadApp _t.info', _t.info)
         if (_t.info.hasOwnProperty('action')) {
           if (_t.info.action === 'install') {
             path = appName + '/install'

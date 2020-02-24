@@ -43,7 +43,7 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    z-index: 10002;
+    z-index: 1000;
   }
   .topmenu .slider-container{
     position: absolute;

@@ -8,7 +8,7 @@
   .app-task-bar {
     position: absolute;
     bottom: 0;
-    z-index: 5000;
+    z-index: 2001;
     width: 100%;
     height: 40px;
     display: inline-block;

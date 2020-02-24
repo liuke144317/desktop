@@ -11,7 +11,7 @@
     z-index: 5020;
     /*width: 100%;*/
     /*height: 100%;*/
-    display: inline-block;
+    /*display: inline-block;*/
     // #0E2E49
     /*border-top: 1px solid rgba(14, 46, 73, .3);*/
     box-sizing: content-box;
