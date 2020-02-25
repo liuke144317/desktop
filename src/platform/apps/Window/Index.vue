@@ -426,6 +426,7 @@
       // 拖拽缩放配置
       dragResizeConfig: function () {
         let _t = this
+        // 在这判断窗口是否是最大值，是的话则设置defDragResizeConfig中的drag属性
         return _t.handleDragResizeConfig()
       }
     },
@@ -438,7 +439,7 @@
         // 合并配置，遇到对象则合并，其他覆盖
         let handler = function (source, target) {
           let keys = Object.keys(source)
-          // 1.判断源对象是否需要处理
+          // 1.判断源对象是否需要处理，不管是几层的对象，原数据带的属性就覆盖，不存在的则使用默认值
           if (keys.length) {
             keys.map(key => {
               // 源属性
