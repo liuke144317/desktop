@@ -52,7 +52,7 @@
                 <div class="div_user"><span></span><input  name="sUserName" id="normal_username" class="username" type="text" placeholder="用户名/手机号码" v-model="login.username"/></div>
                 <div class="div_pw"><span></span><input name="sPassword" id="normal_pw" class="pw" type="password" placeholder="密码" v-model="login.password"/></div>
                 <div id="div_code" class="div_code" style="display: none;">
-                  <input name="CODE" id="code_input" class="username code" type="text" placeholder="请输入验证码" />
+                  <input name="CODE" id="code_input" class="username code" type="text" placeholder="请输入验证码" v-model="login.code_input"/>
                   <div class="img-code">
                     <div id="codeImg" class="code_img"></div>
                   </div>
@@ -80,37 +80,104 @@
   </div>
 </template>
 <script>
+    import 'jquery'
+    // import GVerify from '@/global/plugin/Jquery/jquery.codeVerify.js'
+    import Qs from 'qs'
     export default {
       name: 'Index',
       data () {
         return {
           login: {
             username: '',
-            password: ''
+            password: '',
+            code_input: ''
           }
         }
       },
       methods: {
+        // 用户登录
         userLogin () {
-          console.log('登陆', this.login.password + '+' + this.login.username)
-          let flag = this.loginVerify(this.login.username)
-          console.log('flag', flag)
-        },
-        loginVerify (username) {
-          let flag = ''
-          console.log('username', username)
-          this.$get('/psm_Web_exploded/login_verify', {
-            sUserName: username
+          // let verifyCode = new GVerify('codeImg')
+          // console.log('verifyCode', verifyCode)
+          this.loginVerify(this.login.username).then(res => {
+            if (res === '用户名不存在！' || res === '') {
+              $('#div_code').css({display: 'none'})
+              $('#login_tab').css({height: '340px', top: '145px'})
+            }
+            $('#loginBtn').val('登录中...').attr('disabled', 'disabled')
+            this.login.password = $.trim(this.login.password)
+            let res1 = false
+            let tipMsg = '请输入验证码!'
+            if (res === '密码已错误三次,请输入验证码！') {
+              $('#div_code').css({display: 'block'})
+              $('#login_tab').css({height: '400px', top: '100px'})
+              // res1 = verifyCode.validate(document.getElementById('code_input').value)
+              tipMsg = res
+            } else {
+              res1 = true
+            }
+            $('#loginTips').css({display: 'none'})
+            if (res1 === '用户名不存在！') {
+              $('#loginTips').html('用户名不存在!').fadeIn()
+              $('#loginBtn').val('登录').removeAttr('disabled')
+            } else if (this.login.password === '') {
+              $('#loginTips').html('请输入正确的密码!').fadeIn()
+              $('#loginBtn').val('登录').removeAttr('disabled')
+              return false
+            } else {
+              if (res1) {
+                $('#loginTips').html(' &nbsp; ').fadeIn()
+              } else {
+                $('#loginTips').html(tipMsg).fadeIn()
+                $('#loginBtn').val('登录').removeAttr('disabled')
+                return false
+              }
+              // 登录请求
+              let formData = new FormData()
+              formData.append('sUserName', this.login.username)
+              formData.append('sPassword', this.login.password)
+              formData.append('CODE', this.login.code_input)
+              let data = Qs.stringify({
+                sUserName: this.login.username,
+                sPassword: this.login.password,
+                CODE: this.login.code_input
+              })
+              this.$post('/psm_Web_exploded/login_login', data)
+                .then(res => {
+                  console.log('res', res)
+                  if (res[0].msg === '') {
+                    // 进入首页
+                    console.log('进入首页', res)
+                  } else {
+                    $('#loginTips').html(res[0].msg).fadeIn()
+                    $('#loginBtn').val('登录').removeAttr('disabled')
+                  }
+                }, rej => {
+                  console.log('登录失败', rej)
+                })
+            }
+          }, rej => {
+            console.log('flag456', rej)
           })
-            .then(res => {
-              flag = res[0].msg
-              console.log('flag', flag)
-              return flag
+        },
+        // 用户名验证
+        loginVerify (username) {
+          let promise = new Promise((resolve, reject) => {
+            let flag = ''
+            this.$get('/psm_Web_exploded/login_verify', {
+              sUserName: username
             })
-            .catch(err => {
-              console.log('error', err)
-              flag = '用户名不存在！'
-            })
+              .then(res => {
+                flag = res[0].msg
+                resolve(flag)
+              })
+              .catch(err => {
+                flag = 'error'
+                console.log('用户名验证异常', err)
+                reject(flag)
+              })
+          })
+          return promise
         }
       }
     }
