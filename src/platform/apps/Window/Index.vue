@@ -426,7 +426,6 @@
       // 拖拽缩放配置
       dragResizeConfig: function () {
         let _t = this
-        // 在这判断窗口是否是最大值，是的话则设置defDragResizeConfig中的drag属性
         return _t.handleDragResizeConfig()
       }
     },
@@ -496,6 +495,7 @@
         let _t = this
         // 广播事件 触发window事件
         let appInfo = {..._t.info}
+        console.log('appInfo', appInfo)
         _t.$utils.bus.$emit('platform/window/trigger', {
           // 通过窗口控制按钮缩放窗口
           action: 'zIndexChangeByWindow',

@@ -11,78 +11,6 @@ XDrag.install = function (Vue) {
   }
   Vue.directive('x-drag', {
     inserted: function (el, binding) {
-      /*
-      // config 配置结构参考
-      config = {
-        // 上下文，如需广播事件则必须
-        context: _t,
-        // 拖拽配置
-        drag: {
-          // 是否启用拖拽
-          enable: true,
-          // 指定拖拽把手元素，支持一个或多个把手
-          handler: [],
-          // 拖拽不同阶段 className
-          class: {
-            start: 'x-drag-start',
-            move: 'x-drag-move',
-            done: 'x-drag-done',
-            main: 'x-drag'
-          },
-          // 回调
-          callback: {
-            start: null,
-            move: null,
-            done: (style) => {
-              console.log('drag done', style)
-            }
-          },
-          // 拖拽范围 类型：Object || Function
-          range: {
-            minX: 0,
-            maxX: 500,
-            minY: 0,
-            maxY: 500,
-          }
-        },
-        // 缩放配置
-        resize: {
-          // 是否启用拖拽
-          enable: false,
-          // 指定缩放把手元素，支持一个或多个把手
-          handler: [],
-          // 缩放不同阶段 className
-          class: {
-            start: 'x-resize-start',
-            move: 'x-resize-move',
-            done: 'x-resize-done',
-            main: 'x-resize'
-          },
-          // 回调
-          callback: {
-            start: null,
-            move: null,
-            done: (style) => {
-              console.log('resize done', style)
-            }
-          },
-          // 缩放范围 类型：Object || Function
-          range: {
-            minX: 0,
-            maxX: 500,
-            minY: 0,
-            maxY: 500,
-          }
-        },
-        // 全局范围 类型：Object || Function
-          range: {
-            minX: 0,
-            maxX: 500,
-            minY: 0,
-            maxY: 500,
-          }
-      }
-      */
       let getCss = function (element) {
         return element.currentStyle ? element.currentStyle : document.defaultView.getComputedStyle(element, null)
       }
@@ -111,6 +39,13 @@ XDrag.install = function (Vue) {
             }
             // 绑定事件
             bar.onmousedown = function (event) {
+              // let leftPer = Array.prototype.slice.call(target.style.left, target.style.left.indexOf('-') + 2, target.style.left.indexOf('p')).join('')
+              // let topPer = Array.prototype.slice.call(target.style.top, target.style.top.indexOf('-') + 2, target.style.top.indexOf('p')).join('')
+              // 窗口最大时禁止拖拽
+              let parentClassName = event.target.closest('.app-window').className
+              if (parentClassName.indexOf('max') !== -1) {
+                return
+              }
               if (event.stopPropagation) {
                 event.stopPropagation()
               }
@@ -128,6 +63,10 @@ XDrag.install = function (Vue) {
                 left: parseFloat(target.offsetLeft),
                 top: parseFloat(target.offsetTop)
               }
+              // dragInfo.position = {
+              //   left: leftPer,
+              //   top: topPer
+              // }
               if (config.drag.callback && typeof config.drag.callback.start === 'function') {
                 config.drag.callback.start(dragInfo.position)
               }
@@ -173,6 +112,11 @@ XDrag.install = function (Vue) {
                       top: dragInfo.position.top + dis.y + 'px',
                       margin: 0
                     }
+                    // dragInfo.done = {
+                    //   left: 'calc(50% - ' + (parseInt(dragInfo.position.left) - dis.x) + 'px)',
+                    //   top: 'calc(50% - ' + (parseInt(dragInfo.position.top) - dis.y) + 'px)',
+                    //   margin: 0
+                    // }
                     Object.keys(dragInfo.done).map(function (key) {
                       target.style[key] = dragInfo.done[key]
                     })
