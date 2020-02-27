@@ -14,5 +14,10 @@ export default {
   'user/application/list': async ({ commit }, payload) => {
     let res = await Api.user.getApplicationListByUserId(payload)
     return res
+  },
+  // 获取导航栏列表
+  'user/getNavSlider/list': () => {
+    let res = Api.user.getNavSliderList()
+    return res
   }
 }

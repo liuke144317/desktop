@@ -41,7 +41,7 @@
           app_category: ' ',
           app_description: '个人用户',
           app_id: '',
-          app_name: 'TestLogin',
+          app_name: 'mLogin',
           app_publish: 1,
           app_title: '个人用户',
           app_type: 0,
@@ -53,7 +53,15 @@
           update_time: '2017-11-13T08:56:47.000Z',
           user_id: 1,
           user_type: 0
-        }
+        },
+        // 应用列表
+        appData: {
+          list: [],
+          iconList: [],
+          navSliderLIst: [],
+          showTitle: true
+        },
+        navSliderData: []
       }
     },
     computed: {
@@ -312,24 +320,18 @@
         // TODO 1.分发action，获取用户应用数据
         let res = await _t.$store.dispatch(_t.$utils.store.getType('Admin/user/application/list', 'Platform'))
         res.data.list = [...res.data.list, this.userSetting]
-        console.log('res', res)
         if (!res || res.status !== 200) {
           _t.$Message.error('获取用户应用列表失败')
           return
         }
-        let appData = {
-          list: [],
-          iconList: [],
-          showTitle: true
-        }
         // 处理返回数据
         if (res.data && res.data.list && res.data.list.length) {
           _t.$Message.success(res.msg || '获取用户应用列表成功！')
-          appData.list = res.data.list
+          _t.appData.list = res.data.list
           // 处理iconList
-          appData.list.map(item => {
+          _t.appData.list.map(item => {
             let config = JSON.parse(item.config)
-            appData.iconList.push({
+            _t.appData.iconList.push({
               ...item,
               config: config
             })
@@ -337,14 +339,27 @@
         } else {
           _t.$Message.info('暂无数据！')
         }
-        let _appData = JSON.parse(JSON.stringify(appData))
+        let _appData = JSON.parse(JSON.stringify(_t.appData))
         // 分发mutations，更新用户应用数据
-        _t.$store.commit(_t.$utils.store.getType('Admin/appData/set', 'Platform'), appData)
+        _t.$store.commit(_t.$utils.store.getType('Admin/appData/set', 'Platform'), _t.appData)
         // 分发mutations，备份用户应用数据
         _t.$store.commit(_t.$utils.store.getType('Admin/appData/backup', 'Platform'), _appData)
         _t.$nextTick(function () {
           // 广播事件，更新桌面图标布局
           _t.$utils.bus.$emit('platform/desktopIcon/render')
+        })
+      },
+      // 获取NavSlider导航栏数据
+      getNavSliderList () {
+        let _t = this
+        let res = _t.$store.dispatch(_t.$utils.store.getType('Admin/user/getNavSlider/list', 'Platform'))
+        console.log('res......................', res)
+        res.then(resolve => {
+          console.log('_t.resolve', resolve)
+          _t.appData.navSliderLIst = resolve
+          console.log('appData123', _t.appData)
+        }, reject => {
+          console.log('resolve', reject)
         })
       },
       // 导航栏左右滑动
@@ -358,6 +373,7 @@
         // 获取用户基本信息
         _t.getBaseInfo()
         // FIXME 获取用户应用数据
+        _t.getNavSliderList()
         _t.getUserAppData()
         // 监听事件，刷新用户应用数据
         _t.$utils.bus.$on('Admin/appData/refresh', function () {

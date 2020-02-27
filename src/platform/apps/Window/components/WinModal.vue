@@ -101,6 +101,7 @@
         // TODO 判断当前操作是install || uninstall || openApp
         // 常规打开
         let handler = function (path) {
+          debugger
           // 动态加载组件
           require.ensure([], (require) => {
             let isSuccess = false

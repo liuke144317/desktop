@@ -80,9 +80,8 @@
   </div>
 </template>
 <script>
-    import 'jquery'
-    // import GVerify from '@/global/plugin/Jquery/jquery.codeVerify.js'
-    import Qs from 'qs'
+    // import 'jquery'
+    import {GVerify} from '../../../static/Jquery/jquery.codeVerify.js'
     export default {
       name: 'Index',
       data () {
@@ -97,30 +96,30 @@
       methods: {
         // 用户登录
         userLogin () {
-          // let verifyCode = new GVerify('codeImg')
-          // console.log('verifyCode', verifyCode)
-          this.loginVerify(this.login.username).then(res => {
+          let _t = this
+          let verifyCode = new GVerify('codeImg')
+          _t.loginVerify(this.login.username).then(res => {
             if (res === '用户名不存在！' || res === '') {
               $('#div_code').css({display: 'none'})
               $('#login_tab').css({height: '340px', top: '145px'})
             }
             $('#loginBtn').val('登录中...').attr('disabled', 'disabled')
-            this.login.password = $.trim(this.login.password)
+            _t.login.password = $.trim(_t.login.password)
             let res1 = false
             let tipMsg = '请输入验证码!'
             if (res === '密码已错误三次,请输入验证码！') {
               $('#div_code').css({display: 'block'})
               $('#login_tab').css({height: '400px', top: '100px'})
-              // res1 = verifyCode.validate(document.getElementById('code_input').value)
+              res1 = verifyCode.validate(document.getElementById('code_input').value)
               tipMsg = res
             } else {
               res1 = true
             }
             $('#loginTips').css({display: 'none'})
-            if (res1 === '用户名不存在！') {
+            if (res === '用户名不存在！') {
               $('#loginTips').html('用户名不存在!').fadeIn()
               $('#loginBtn').val('登录').removeAttr('disabled')
-            } else if (this.login.password === '') {
+            } else if (_t.login.password === '') {
               $('#loginTips').html('请输入正确的密码!').fadeIn()
               $('#loginBtn').val('登录').removeAttr('disabled')
               return false
@@ -133,51 +132,34 @@
                 return false
               }
               // 登录请求
-              let formData = new FormData()
-              formData.append('sUserName', this.login.username)
-              formData.append('sPassword', this.login.password)
-              formData.append('CODE', this.login.code_input)
-              let data = Qs.stringify({
-                sUserName: this.login.username,
-                sPassword: this.login.password,
-                CODE: this.login.code_input
-              })
-              this.$post('/psm_Web_exploded/login_login', data)
+              let types = _t.$utils.store.getType('Login/doLogin', 'Platform')
+              _t.$store.dispatch(types, this.login)
                 .then(res => {
                   console.log('res', res)
                   if (res[0].msg === '') {
                     // 进入首页
+                    _t.$store.commit(_t.$utils.store.getType('userInfo/update', 'Platform'), {
+                      isLogin: true
+                    })
                     console.log('进入首页', res)
                   } else {
                     $('#loginTips').html(res[0].msg).fadeIn()
                     $('#loginBtn').val('登录').removeAttr('disabled')
                   }
-                }, rej => {
-                  console.log('登录失败', rej)
+                }, err => {
+                  console.log('登录失败', err)
                 })
             }
           }, rej => {
-            console.log('flag456', rej)
+            console.log('登录失败', rej)
           })
         },
         // 用户名验证
         loginVerify (username) {
-          let promise = new Promise((resolve, reject) => {
-            let flag = ''
-            this.$get('/psm_Web_exploded/login_verify', {
-              sUserName: username
-            })
-              .then(res => {
-                flag = res[0].msg
-                resolve(flag)
-              })
-              .catch(err => {
-                flag = 'error'
-                console.log('用户名验证异常', err)
-                reject(flag)
-              })
-          })
-          return promise
+          let _t = this
+          let types = _t.$utils.store.getType('Login/doLoginVerify', 'Platform')
+          let res = _t.$store.dispatch(types, username)
+          return res
         }
       }
     }

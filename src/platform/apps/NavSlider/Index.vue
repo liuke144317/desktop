@@ -136,7 +136,7 @@
           <div class="sc-left iconfont icon-icon-arrow-left2" @click="initSlider('left')" style="display: none;"></div>
           <div class="sc-center" style="justify-content: center;">
             <div class="m-slider" style="transform: translate(0px, 0px);">
-              <span v-for="(item,index) in navData" class="nvabox-trigger" data-trigger="nvabox-park" :sapplytype="item.sapplytype" :style="index === 0 ? 'background-color: rgb(28, 98, 170)':''">
+              <span v-for="(item,index) in appData.navSliderLIst" class="nvabox-trigger" data-trigger="nvabox-park" :sapplytype="item.sapplytype" :style="index === 0 ? 'background-color: rgb(28, 98, 170)':''">
                 <img :src="item.imgSrc">
                 <span class="text">{{item.text}}</span>
               </span>
@@ -166,7 +166,6 @@
   import { mapState } from 'vuex'
   export default {
     name: 'Login',
-    props: ['navData'],
     computed: {
       ...mapState('Platform/Admin', {
         appData: state => state.appData

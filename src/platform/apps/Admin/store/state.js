@@ -6,11 +6,13 @@ export default {
   appData: {
     list: [],
     iconList: [],
+    navSliderLIst: [],
     showTitle: true
   },
   _appData: {
     list: [],
     iconList: [],
+    navSliderLIst: [],
     showTitle: true
   }
 }

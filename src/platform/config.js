@@ -73,6 +73,14 @@ export default {
       component: 'Index.vue',
       store: 'store/index.js'
     },
+    // 前台登录-重写
+    mLogin: {
+      name: 'Login',
+      parent: './apps',
+      path: './apps/mLogin/',
+      component: 'Index.vue',
+      store: 'store/index.js'
+    },
     // 开始菜单
     StartMenu: {
       name: 'StartMenu',
