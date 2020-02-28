@@ -77,7 +77,7 @@ export default {
     mLogin: {
       name: 'Login',
       parent: './apps',
-      path: './apps/mLogin/',
+      path: './apps/UIComponent/',
       component: 'Index.vue',
       store: 'store/index.js'
     },

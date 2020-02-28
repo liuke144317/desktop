@@ -345,7 +345,6 @@
       },
       getLogList: async function () {
         let _t = this
-        console.log('xxxx')
         // 分发action，调接口
         let res = await _t.$store.dispatch('Apps/SystemLog/list', {
           ..._t.searchForm,

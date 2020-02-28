@@ -5,7 +5,6 @@
  */
 
 import Vue from 'vue'
-
 export default {
   user: {
     // 获取用户基本信息

@@ -24,8 +24,8 @@
   >
     <!-- 前台 -->
     <component :is="components.Home" v-if="!userInfo.isLogin">
-      <component :is="components.mLogin"></component>
-      <!-- <component :is="components.Wallpaper" switchType="components" :style="{ 'z-index': -10 }"></component>-->
+      <component :is="components.Login"></component>
+       <component :is="components.Wallpaper" switchType="components" :style="{ 'z-index': -10 }"></component>
     </component>
     <!-- 后台 -->
     <component :is="components.Admin" v-if="userInfo.isLogin">
@@ -45,6 +45,7 @@
           <component :is="components.TaskBarIconBox" slot="TaskBarIconBox"></component>
           <component :is="components.TaskBarWidget" slot="TaskBarWidget"></component>
         </component>
+
       </component>
     </component>
     <component :is="components.ContextMenu"></component>
@@ -56,7 +57,6 @@
   import config from './config'
   import utils from '@/global/utils'
   const moduleName = utils.store.getModuleName('Platform')
-
   export default {
     name: 'Platform',
     data () {

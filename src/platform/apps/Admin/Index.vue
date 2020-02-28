@@ -39,13 +39,13 @@
         // 个人用户
         userSetting: {
           app_category: ' ',
-          app_description: '个人用户',
+          app_description: '全局UI组件',
           app_id: '',
-          app_name: 'mLogin',
+          app_name: 'UIComponent',
           app_publish: 1,
-          app_title: '个人用户',
+          app_title: '全局UI组件',
           app_type: 0,
-          config: '{"app":{"icon":"./static/apps/UserInfo/logo.jpg","id":"","name":"UserInfo","title":"个人用户"},"desktopIcon":{"style":{"left":"0px","top":"0px"}},"install":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"taskBar":{"isPinned":true},"uninstall":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"window":{"enableResize":["custom","small","min","max","middle","reset","close"],"size":"custom","status":"close","style":{"height":"100%","left":"calc(50% - 500px)","top":"calc(50% - 400px)","width":"100%"},"type":"modal"}}',
+          config: '{"app":{"icon":"./static/apps/UserInfo/logo.jpg","id":"","name":"UserInfo","title":"全局UI组件展示"},"desktopIcon":{"style":{"left":"0px","top":"0px"}},"install":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"taskBar":{"isPinned":true},"uninstall":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"window":{"enableResize":["custom","small","min","max","middle","reset","close"],"size":"custom","status":"close","style":{"height":"450px","left":"calc(50% - 500px)","top":"calc(50% - 400px)","width":"600px"},"type":"modal"}}',
           create_time: '2017-07-14T17:06:06.000Z',
           id: '',
           private: 0,
@@ -353,11 +353,8 @@
       getNavSliderList () {
         let _t = this
         let res = _t.$store.dispatch(_t.$utils.store.getType('Admin/user/getNavSlider/list', 'Platform'))
-        console.log('res......................', res)
         res.then(resolve => {
-          console.log('_t.resolve', resolve)
           _t.appData.navSliderLIst = resolve
-          console.log('appData123', _t.appData)
         }, reject => {
           console.log('resolve', reject)
         })

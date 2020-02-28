@@ -42,7 +42,7 @@ XDrag.install = function (Vue) {
               // let leftPer = Array.prototype.slice.call(target.style.left, target.style.left.indexOf('-') + 2, target.style.left.indexOf('p')).join('')
               // let topPer = Array.prototype.slice.call(target.style.top, target.style.top.indexOf('-') + 2, target.style.top.indexOf('p')).join('')
               // 窗口最大时禁止拖拽
-              let parentClassName = event.target.closest('.app-window').className
+              let parentClassName = $(event.target).closest('.app-window').attr('class')
               if (parentClassName.indexOf('max') !== -1) {
                 return
               }

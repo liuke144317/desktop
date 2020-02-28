@@ -4,7 +4,7 @@
       <div class="header-box fn-clear">
         <div class="header-brand fn-left">
           <a href="" class="brand-img">
-            <img src="@@/login/open/themes/images/v3/zdrjypsm_log_cloud_v2.png" alt="">
+            <img src="../../../../static/apps/MLogin/zdrjypsm_log_cloud_v2.png" alt="">
           </a>
         </div>
         <div class="header-nav">
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="app_download">
-          <img id="erweima_code" src="@@/static/login/open/themes/images/v3/zdrjypsm-code.png">
+          <img id="erweima_code" src="../../../../static/apps/MLogin/zdrjypsm-code.png">
           <p>扫码下载手机APP</p>
           <div class="app_download_bg"></div>
         </div>
