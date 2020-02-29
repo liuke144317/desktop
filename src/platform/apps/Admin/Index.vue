@@ -7,7 +7,7 @@
 <style scoped lang="less" rel="stylesheet/less">
   .app-admin {
     position: absolute;
-    top: 74px;
+    top: 50px;
     bottom: 0;
     left: 0;
     right: 0;

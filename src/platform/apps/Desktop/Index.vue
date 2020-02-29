@@ -24,6 +24,18 @@
       left: 0;
       right: 0;
       z-index: 2000;
+
+      .desktopIconContainer{
+        position: absolute;
+        top: 50px;
+        left: 20px;
+        right: 20px;
+        bottom: 50px;
+        background: rgba(255,255,255,.5);
+        z-index: 1900;
+        border-radius: 10px;
+        transition:all 0.6s;
+      }
     }
   }
 </style>
@@ -35,17 +47,21 @@
       @drop.stop.prevent="handleDrop"
       @dragover.stop.prevent
     >
-      <component
-        :is="childComponents.DesktopIcon"
-        v-for="(item, index) in appData.iconList"
-        v-if="item.action !== 'install' || (item.action === 'install' && item.installed)"
-        :key="'desktop_icon_' + index"
-        :info="item"
-        :showTitle="appData.showTitle"
-        :style="item.config.desktopIcon.style"
-      >
-
-      </component>
+      <component :is="childComponents.Menu" :style="MenuBox"></component>
+      <div class="desktopIconContainer" :style="DesktopIconBox">
+        <div class="desktopIconBox">
+          <component
+            :is="childComponents.DesktopIcon"
+            v-for="(item, index) in appData.iconList"
+            v-if="item.action !== 'install' || (item.action === 'install' && item.installed)"
+            :key="'desktop_icon_' + index"
+            :info="item"
+            :showTitle="appData.showTitle"
+            :style="item.config.desktopIcon.style"
+          >
+          </component>
+        </div>
+      </div>
       <component :is="childComponents.DesktopWidget"></component>
       <component
         :is="childComponents.Window"
@@ -58,7 +74,7 @@
       <component :is="childComponents.SplitScreen" :data="splitScreenData"></component>
       <slot name="taskBar"></slot>
     </div>
-    <slot name="nav-slider"></slot>
+    <slot name="Header"></slot>
   </div>
 </template>
 
@@ -75,6 +91,8 @@
     },
     data () {
       return {
+        MenuBox: {},
+        DesktopIconBox: {},
         gridArr: [],
         // 每个图标宽高80px margin 10px
         itemWidthHeight: 100,
@@ -163,6 +181,15 @@
       }
     },
     methods: {
+      openMenu (flag) {
+        if (flag) {
+          this.DesktopIconBox = {left: '220px'}
+          this.MenuBox = {left: '0'}
+        } else {
+          this.DesktopIconBox = {left: '20px'}
+          this.MenuBox = {left: '-200px'}
+        }
+      },
       // 处理iconList
       handleIconList: function (iconList) {
         let _t = this
@@ -1238,6 +1265,14 @@
       // 监听应用卸载
       _t.$utils.bus.$on('platform/application/uninstall', function (tmpInfo) {
         _t.handleAppInstallOrUninstall(tmpInfo)
+      })
+      // 监听Menu打开
+      _t.$utils.bus.$on('platform/application/header', function (flag) {
+        _t.openMenu(flag)
+      })
+      // 监听Menu关闭
+      _t.$utils.bus.$on('platform/application/Menu', function (flag) {
+        _t.openMenu(flag)
       })
       let resizeTimer = null
       // 监听窗口大小调整

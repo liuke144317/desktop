@@ -23,6 +23,14 @@ export default {
       component: 'Index.vue',
       store: 'store/index.js'
     },
+    // 桌面头部
+    Header: {
+      name: 'Header',
+      parent: './apps',
+      path: './apps/Header/',
+      component: 'Index.vue',
+      store: 'store/index.js'
+    },
     // 桌面
     Desktop: {
       name: 'Desktop',
@@ -86,6 +94,14 @@ export default {
       name: 'StartMenu',
       parent: './apps',
       path: './apps/StartMenu/',
+      component: 'Index.vue',
+      store: 'store/index.js'
+    },
+    // 左侧菜单
+    Menu: {
+      name: 'Menu',
+      parent: './apps',
+      path: './apps/Menu/',
       component: 'Index.vue',
       store: 'store/index.js'
     },

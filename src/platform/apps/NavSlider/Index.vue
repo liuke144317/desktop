@@ -7,7 +7,7 @@
 <style scoped>
   .app-nav{
     background: #0c4b8e;
-    height: 74px;
+    height: 50px;
     display: flex;
     margin-top: -74px;
   }
