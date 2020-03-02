@@ -37,7 +37,8 @@
          Window: components.Window,
          Wallpaper: components.Wallpaper,
          SplitScreen: components.SplitScreen,
-         Menu: components.Menu
+         Menu: components.Menu,
+         Notice: components.Notice
         }"
       >
         <!--<component slot="nav-slider" :is="components.NavSlider" v-if="appData.navSliderLIst.length !== 0"></component>-->

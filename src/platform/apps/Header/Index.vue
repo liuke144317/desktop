@@ -10,41 +10,98 @@
         <div class="module" @click="open">自定义模块名称</div>
       </div>
       <div class="hd-right">
-        <div class="name">欢迎您：苏珊</div>
-        <div class="message"><i class="iconfont icon-xiaoxi"></i></div>
+        <div class="name">
+            <div class="nm-head-box" @mouseenter="openUserInfo" @mouseleave="closeUserInfo">
+              <div class="nm-head">
+                <img width="100%" height="100%" src="static/apps/UserInfo/user.png" alt="">
+              </div>
+            </div>
+            <div class="nm-name">欢迎您：苏珊</div>
+            <div class="detail-info" :style="detailInfo">
+              <div class="description">
+                <div class="des-img">
+                  <img width="100%" height="100%" src="static/apps/UserInfo/user.png" alt="">
+                </div>
+                <div class="des-info">
+                  <div>当前园区：1</div>
+                  <div>姓名：苏珊</div>
+                  <div>所在单位：2</div>
+                </div>
+              </div>
+              <div></div>
+            </div>
+        </div>
+        <div class="message" @click="openNotice">
+          <Badge :value="12" class="item">
+            <i class="iconfont icon-xiaoxi"></i>
+          </Badge>
+        </div>
         <div class="doubt"><i class="iconfont icon-yiwen"></i></div>
       </div>
     </div>
 </template>
 
 <script>
+    import {Badge} from 'element-ui'
     export default {
       name: 'Index',
+      components: {
+        Badge
+      },
+      data () {
+        return {
+          detailInfo: {
+            width: '300px',
+            height: ' 400px',
+            display: 'none'
+          }
+        }
+      },
       methods: {
+        // 打开左侧Menu菜单面板
         open () {
           let _t = this
           console.log('打开')
           _t.$utils.bus.$emit('platform/application/header', true)
+        },
+        // 打开右侧Notice面板
+        openNotice () {
+          let _t = this
+          _t.$utils.bus.$emit('platform/application/Notice/show')
+        },
+        // 用户信息
+        openUserInfo (event) {
+          let _t = this
+          let detailInfoWidth = parseInt(_t.detailInfo.width)
+          let left = -(detailInfoWidth / 2) + event.target.offsetLeft + (event.target.offsetWidth / 2) + 'px'
+          _t.detailInfo = {..._t.detailInfo, left: left, top: event.target.offsetWidth + 10 + 'px', display: 'block'}
+        },
+        // 关闭
+        closeUserInfo () {
+          // let _t = this
+          // _t.detailInfo = {..._t.detailInfo, display: 'none'}
         }
       }
     }
 </script>
 
 <style scoped lang="stylus">
+  height = 50px
   .header-box
     background #0077D5
     width 100%
-    height 50px
+    height height
     display flex
-    margin-top -50px
+    margin-top -(height)
     font-size 0
+    position relative
     .hd-left
       font-size 0px
       .logo,.parting-line,.module
         display inline-block
         vertical-align top
         .img-box
-          height 50px
+          height height
           display table-cell
           vertical-align middle
           img
@@ -52,17 +109,19 @@
       .logo
         padding-left 10px
       .parting-line
-        font-size 30px
-        color  #fff
-        height 50px
-        padding 0 5px
+        border-left: 2px #fff solid;
+        color: #fff;
+        height: 20px;
+        margin-top: 15px;
+        margin-left: 5px;
+        margin-right: 5px;
       .module
         font-size 20px
         color #fff
         font-size 20px
         color #fff
-        height 50px
-        line-height 50px
+        height height
+        line-height height
         vertical-align middle
     .hd-right
       flex-grow 1
@@ -70,17 +129,80 @@
       .name,.message,.doubt
         display inline-block
         vertical-align top
-        height 50px
-        line-height 50px
+        height height
+        line-height height
         color #fff
       .name
-        font-size 12px
         width 200px
         text-align center
+        position: relative
+        .detail-info
+          position absolute
+          border-radius 5px
+          background #fff
+          z-index 2005
+          border-radius: 5px;
+          overflow: hidden;
+    .description
+            width 100%
+            height 100px
+            background #24B4FD
+            position relative
+            .des-img
+              height: 60px;
+              width: 60px;
+              background: #fff;
+              border-radius: 50%;
+              overflow: hidden;
+              position: absolute;
+              bottom: 0;
+              top: 0;
+              margin: auto;
+              left: 20px;
+            .des-info
+              position: absolute;
+              height: 60px;
+              bottom: 0;
+              top: 0;
+              margin auto
+              left: 100px;
+              font-size 13px
+              color #fff
+              &>div
+                height 20px
+                line-height 20px
+        .nm-head-box,.nm-name
+          display inline-block
+          vertical-align top
+          height height
+          line-height height
+        .nm-head-box
+          width height
+          height height
+          position: relative;
+          .nm-head
+            position absolute
+            height 30px
+            width 30px
+            margin auto
+            background #fff
+            top 0
+            bottom 0
+            right 0
+            left 0
+            border-radius 50%
+            overflow hidden
+          &:hover
+            cursor pointer
+        .nm-name
+          font-size 12px
       .message
         width 60px
         text-align center
+        &>>>.el-badge__content.is-fixed
+          top:10px
+          transform translateY(-50%) translateX(100%) scaleX(0.8) scaleY(0.8)
       .doubt
         text-align left
-        width 50px
+        width height
 </style>

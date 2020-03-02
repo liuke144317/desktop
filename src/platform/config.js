@@ -157,6 +157,13 @@ export default {
       path: './apps/NavSlider/',
       component: 'Index.vue',
       store: 'store/index.js'
+    },
+    // 消息通知
+    Notice: {
+      name: 'Notice',
+      path: './apps/Notice/',
+      component: 'Index.vue',
+      store: 'store/index.js'
     }
   }
 }

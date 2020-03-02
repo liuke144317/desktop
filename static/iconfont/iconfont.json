@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9974395",
+      "name": "IM聊天-对话",
+      "font_class": "IMliaotian-duihua",
+      "unicode": "e6fe",
+      "unicode_decimal": 59134
+    },
+    {
       "icon_id": "1115039",
       "name": "关闭",
       "font_class": "guanbi",

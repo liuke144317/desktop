@@ -47,6 +47,7 @@
       @drop.stop.prevent="handleDrop"
       @dragover.stop.prevent
     >
+      <component :is="childComponents.Notice"></component>
       <component :is="childComponents.Menu" :style="MenuBox"></component>
       <div class="desktopIconContainer" :style="DesktopIconBox">
         <div class="desktopIconBox">
