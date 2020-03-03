@@ -3,8 +3,7 @@
     <el-drawer
       title="未读消息"
       :visible.sync="drawer"
-      modal="false"
-      show-close="true"
+      :modal="modal"
     >
       <NoticeItem></NoticeItem>
     </el-drawer>
@@ -22,7 +21,8 @@
       },
       data () {
         return {
-          drawer: false
+          drawer: false,
+          modal: false
         }
       },
       methods: {
@@ -61,4 +61,5 @@
     background rgba(0,0,0,.1)
     height 50px
     padding 0 10px
+    font-weight 600
 </style>

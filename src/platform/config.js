@@ -151,13 +151,6 @@ export default {
       component: 'Index.vue',
       store: 'store/index.js'
     },
-    // 导航栏自适应滑块
-    NavSlider: {
-      name: 'NavSlider',
-      path: './apps/NavSlider/',
-      component: 'Index.vue',
-      store: 'store/index.js'
-    },
     // 消息通知
     Notice: {
       name: 'Notice',

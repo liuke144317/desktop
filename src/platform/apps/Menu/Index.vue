@@ -46,8 +46,7 @@
       methods: {
         close () {
           let _t = this
-          console.log('关闭')
-          _t.$utils.bus.$emit('platform/application/Menu', false)
+          _t.$utils.bus.$emit('platform/application/Menu/close', false)
         }
       }
     }
@@ -59,8 +58,6 @@
     position: absolute
     z-index: 1900
     height: 100%
-    width: 200px
-    left: -200px
     background: #282B34
     transition:all 0.6s
     &>>>.el-menu

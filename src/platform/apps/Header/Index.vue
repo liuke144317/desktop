@@ -7,7 +7,9 @@
           </div>
         </div>
         <div class="parting-line">|</div>
-        <div class="module" @click="open">自定义模块名称</div>
+        <div class="module" @click="operationMenu">
+          自定义模块名称
+        </div>
       </div>
       <div class="hd-right">
         <div class="name">
@@ -17,7 +19,7 @@
               </div>
             </div>
             <div class="nm-name">欢迎您：苏珊</div>
-            <div class="detail-info" :style="detailInfo">
+            <div class="detail-info" :style="detailInfo" @mouseenter="openUserInfo" @mouseleave="closeUserInfo">
               <div class="description">
                 <div class="des-img">
                   <img width="100%" height="100%" src="static/apps/UserInfo/user.png" alt="">
@@ -28,7 +30,10 @@
                   <div>所在单位：2</div>
                 </div>
               </div>
-              <div></div>
+              <div class="user-option">
+                <div class="uo-item">个人用户</div>
+                <div class="uo-item">退出登录</div>
+              </div>
             </div>
         </div>
         <div class="message" @click="openNotice">
@@ -51,35 +56,44 @@
       data () {
         return {
           detailInfo: {
-            width: '300px',
-            height: ' 400px',
+            width: '260px',
             display: 'none'
-          }
+          },
+          timeOut: '',
+          flag: false
         }
       },
       methods: {
         // 打开左侧Menu菜单面板
-        open () {
+        operationMenu () {
           let _t = this
-          console.log('打开')
-          _t.$utils.bus.$emit('platform/application/header', true)
+          if (!_t.flag) {
+            _t.$utils.bus.$emit('platform/application/Menu/operation')
+          }
         },
         // 打开右侧Notice面板
         openNotice () {
           let _t = this
           _t.$utils.bus.$emit('platform/application/Notice/show')
         },
-        // 用户信息
+        // 打开用户信息面板
         openUserInfo (event) {
           let _t = this
+          clearTimeout(_t.timeOut)
+          // 如果鼠标在用户信息面板，则不执行下面的操作
+          if (event.target.className === 'detail-info') {
+            return
+          }
           let detailInfoWidth = parseInt(_t.detailInfo.width)
           let left = -(detailInfoWidth / 2) + event.target.offsetLeft + (event.target.offsetWidth / 2) + 'px'
           _t.detailInfo = {..._t.detailInfo, left: left, top: event.target.offsetWidth + 10 + 'px', display: 'block'}
         },
-        // 关闭
+        // 关闭用户信息面板
         closeUserInfo () {
-          // let _t = this
-          // _t.detailInfo = {..._t.detailInfo, display: 'none'}
+          let _t = this
+          _t.timeOut = setTimeout(() => {
+            _t.detailInfo = {..._t.detailInfo, display: 'none'}
+          }, 500)
         }
       }
     }
@@ -123,6 +137,8 @@
         height height
         line-height height
         vertical-align middle
+        &:hover
+          cursor pointer
     .hd-right
       flex-grow 1
       text-align right
@@ -143,14 +159,15 @@
           z-index 2005
           border-radius: 5px;
           overflow: hidden;
-    .description
+          .description
             width 100%
             height 100px
             background #24B4FD
             position relative
+            margin-bottom 10px
             .des-img
-              height: 60px;
-              width: 60px;
+              height: 50px;
+              width: 50px;
               background: #fff;
               border-radius: 50%;
               overflow: hidden;
@@ -165,12 +182,22 @@
               bottom: 0;
               top: 0;
               margin auto
-              left: 100px;
+              left: 80px;
               font-size 13px
               color #fff
               &>div
                 height 20px
                 line-height 20px
+          .uo-item
+            width 100%
+            height 35px
+            line-height 35px
+            color #000
+            text-align left
+            padding 0 20px
+            font-size 12px
+            &:hover
+              background #F0F8FD
         .nm-head-box,.nm-name
           display inline-block
           vertical-align top
@@ -202,7 +229,11 @@
         &>>>.el-badge__content.is-fixed
           top:10px
           transform translateY(-50%) translateX(100%) scaleX(0.8) scaleY(0.8)
+        &:hover
+          cursor pointer
       .doubt
         text-align left
         width height
+        &:hover
+          cursor pointer
 </style>

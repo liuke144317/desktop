@@ -48,8 +48,8 @@
       @dragover.stop.prevent
     >
       <component :is="childComponents.Notice"></component>
-      <component :is="childComponents.Menu" :style="MenuBox"></component>
-      <div class="desktopIconContainer" :style="DesktopIconBox">
+      <component :is="childComponents.Menu" :style="divBox.MenuStyle"></component>
+      <div class="desktopIconContainer" :style="divBox.DesktopIconStyle">
         <div class="desktopIconBox">
           <component
             :is="childComponents.DesktopIcon"
@@ -92,8 +92,6 @@
     },
     data () {
       return {
-        MenuBox: {},
-        DesktopIconBox: {},
         gridArr: [],
         // 每个图标宽高80px margin 10px
         itemWidthHeight: 100,
@@ -175,6 +173,9 @@
       ...mapState('Platform', {
         userInfo: state => state.userInfo
       }),
+      ...mapState('Platform/Menu', {
+        divBox: state => state.divBox
+      }),
       openedWindowList: function () {
         let _t = this
         let windowArr = _t.appData.iconList.filter(item => item.config.window.status !== 'close')
@@ -182,14 +183,16 @@
       }
     },
     methods: {
-      openMenu (flag) {
+      initBox (flag) {
+        let _t = this
         if (flag) {
-          this.DesktopIconBox = {left: '220px'}
-          this.MenuBox = {left: '0'}
+          _t.divBox.MenuStyle = {..._t.divBox.MenuStyle, left: 0}
+          _t.divBox.DesktopIconStyle = {..._t.divBox.DesktopIconStyle, left: parseInt(_t.divBox.MenuStyle.width) + 20 + 'px'}
         } else {
-          this.DesktopIconBox = {left: '20px'}
-          this.MenuBox = {left: '-200px'}
+          _t.divBox.MenuStyle = {..._t.divBox.MenuStyle, left: '-' + _t.divBox.MenuStyle.width}
+          _t.divBox.DesktopIconStyle = {}
         }
+        _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
       },
       // 处理iconList
       handleIconList: function (iconList) {
@@ -197,6 +200,7 @@
         let flag = true
         let firstGrid = _t.gridArr[0][0]
         for (let item of iconList) {
+          debugger
           let xVal = 0
           let yVal = 0
           // FIXME 取中心点坐标
@@ -1237,6 +1241,8 @@
     },
     created: function () {
       let _t = this
+      // 初始化MenuBox 与 DesktopIconBox
+      _t.initBox(_t.divBox.show)
       // 处理格子排序
       _t.handleGridLayout(_t.currentDirection)
       // 初始化渲染
@@ -1268,12 +1274,17 @@
         _t.handleAppInstallOrUninstall(tmpInfo)
       })
       // 监听Menu打开
-      _t.$utils.bus.$on('platform/application/header', function (flag) {
-        _t.openMenu(flag)
+      _t.$utils.bus.$on('platform/application/Menu/operation', function () {
+        let flag = _t.divBox.show
+        _t.initBox(!flag)
+        _t.divBox.show = !flag
+        _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
       })
       // 监听Menu关闭
-      _t.$utils.bus.$on('platform/application/Menu', function (flag) {
-        _t.openMenu(flag)
+      _t.$utils.bus.$on('platform/application/Menu/close', function (flag) {
+        _t.divBox.show = false
+        _t.initBox(_t.divBox.show)
+        _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
       })
       let resizeTimer = null
       // 监听窗口大小调整
