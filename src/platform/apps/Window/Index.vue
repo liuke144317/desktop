@@ -210,7 +210,7 @@
         @mousedown.stop="onWindowMouseDown"
         @dblclick.stop.prevent="handleWindowSize(info.config.window.size === 'max' ? 'reset' : 'max')"
       >
-        {{ info.hasOwnProperty('action') ? (info.action === 'install' ? '安装：' : (info.action === 'uninstall' ? '卸载：' : '')) : '' }}
+        {{ info.hasOwnProperty('action') ? (info.action === 'install' ? '显示应用：' : (info.action === 'uninstall' ? '隐藏应用：' : '')) : '' }}
         {{ info.app_title || info.config.app.title }}
       </div>
       <div class="window-bar">
@@ -492,7 +492,6 @@
         let _t = this
         // 广播事件 触发window事件
         let appInfo = {..._t.info}
-        console.log('appInfo', appInfo)
         _t.$utils.bus.$emit('platform/window/trigger', {
           // 通过窗口控制按钮缩放窗口
           action: 'zIndexChangeByWindow',

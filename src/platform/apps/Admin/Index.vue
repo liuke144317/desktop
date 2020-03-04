@@ -358,10 +358,6 @@
         }, reject => {
           console.log('resolve', reject)
         })
-      },
-      // 导航栏左右滑动
-      initSlider: function (val) {
-        console.log('123')
       }
     },
     created: function () {

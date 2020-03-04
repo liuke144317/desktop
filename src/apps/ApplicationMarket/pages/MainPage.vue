@@ -256,16 +256,16 @@
             title: '宝库',
             action: {
               name: 'install',
-              text: '安装'
+              text: '显示'
             }
           },
           {
             name: 'uninstall',
             icon: '',
-            title: '卸载',
+            title: '隐藏应用',
             action: {
               name: 'uninstall',
-              text: '卸载'
+              text: '隐藏应用'
             }
           }
         ],
@@ -366,12 +366,12 @@
         // 获取当前分类下的应用列表
         _t.getApplicationList()
       },
-      // 处理应用安装/卸载
+      // 处理应用显示/隐藏应用
       handleAction: function (appInfo, action) {
         let _t = this
-        // 处理安装
+        // 处理显示
         let handleInstall = function () {
-          // 安装信息
+          // 显示应用信息
           let installInfo = {}
           let iconList = [..._t.appData.iconList]
           // 查找单个索引
@@ -387,14 +387,14 @@
               ...appInfo,
               config: {
                 ...appInfo.config,
-                // 解构应用安装配置
+                // 解构应用显示应用配置
                 ...appInfo.config.install
               },
               // 应用ID
               appID: appInfo.id,
               // 赋值当前操作为 install
               action: 'install',
-              // 是否已安装过
+              // 是否已显示应用过
               installed: false
             }
           } else {
@@ -404,34 +404,34 @@
               ...currentApp,
               config: {
                 ...currentApp.config,
-                // 解构应用安装配置
+                // 解构应用显示应用配置
                 ...appInfo.config.install
               },
               // 应用ID
               appID: appInfo.id,
               // 赋值当前操作为 install
               action: 'install',
-              // 是否已安装过
+              // 是否已显示应用过
               installed: true
             }
           }
-          // 调用安装工具，打开安装界面
+          // 调用显示应用工具，打开显示应用界面
           _t.$utils.install(_t, installInfo)
         }
-        // 处理卸载
+        // 处理隐藏应用
         let handleUninstall = function () {
-          // 调用卸载工具，打开卸载界面
+          // 调用隐藏应用工具，打开隐藏应用界面
           _t.$utils.uninstall(_t, {
             // 解构应用基础配置
             ...appInfo,
             config: {
               ...appInfo.config,
-              // 解构应用卸载配置
+              // 解构应用隐藏应用配置
               ...appInfo.config.uninstall
             },
             // 赋值当前操作为 uninstall
             action: 'uninstall',
-            // 是否已安装过
+            // 是否已显示应用过
             installed: true
           })
         }

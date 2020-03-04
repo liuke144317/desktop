@@ -46,7 +46,7 @@
       methods: {
         close () {
           let _t = this
-          _t.$utils.bus.$emit('platform/application/Menu/close', false)
+          _t.$utils.bus.$emit('platform/application/Menu/close')
         }
       }
     }

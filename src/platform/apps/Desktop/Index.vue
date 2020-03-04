@@ -81,7 +81,6 @@
 
 <script>
   import { mapState } from 'vuex'
-
   export default {
     name: 'Desktop',
     props: {
@@ -183,8 +182,13 @@
       }
     },
     methods: {
-      initBox (flag) {
+      initBox (type) {
         let _t = this
+        let flag = _t.divBox.show
+        if (type === 'change') {
+          flag = !flag
+          _t.divBox.show = flag
+        }
         if (flag) {
           _t.divBox.MenuStyle = {..._t.divBox.MenuStyle, left: 0}
           _t.divBox.DesktopIconStyle = {..._t.divBox.DesktopIconStyle, left: parseInt(_t.divBox.MenuStyle.width) + 20 + 'px'}
@@ -192,6 +196,7 @@
           _t.divBox.MenuStyle = {..._t.divBox.MenuStyle, left: '-' + _t.divBox.MenuStyle.width}
           _t.divBox.DesktopIconStyle = {}
         }
+        _t.handleGridLayout(_t.currentDirection)
         _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
       },
       // 处理iconList
@@ -200,7 +205,6 @@
         let flag = true
         let firstGrid = _t.gridArr[0][0]
         for (let item of iconList) {
-          debugger
           let xVal = 0
           let yVal = 0
           // FIXME 取中心点坐标
@@ -333,7 +337,6 @@
          * 2.从上往下，从右往左 top-bottom-right-left
          * 3.从下往上，从左往右 bottom-top-left-right
          * 4.从下往上，从右往左 bottom-top-right-left
-         *
          * 5.从左往右，从上往下 left-right-top-bottom
          * 6.从左往右，从下往上 left-right-bottom-top
          * 7.从右往左，从上往下 right-left-top-bottom
@@ -344,8 +347,13 @@
         // 每个图标宽高80px margin 10px
         let itemWidthHeight = _t.itemWidthHeight || 100
         // 处理宽高，保证存在最小宽高
-        let height = document.body.clientHeight || itemWidthHeight
-        let width = document.body.clientWidth || itemWidthHeight
+        // 判断左侧菜单是否打开，yes:width-菜单宽度
+        let divBoxWidth = '0'
+        if (_t.divBox.show) {
+          divBoxWidth = _t.divBox.MenuStyle.width
+        }
+        let height = document.body.clientHeight - 100 || itemWidthHeight // -100是还未生成的.desktopIconContainer节点的absolute时上下边距
+        let width = document.body.clientWidth - (40 + parseInt(divBoxWidth)) || itemWidthHeight // -40是还未生成的desktopIconContainer节点absolute时的左右边距
         let xNum = Math.floor(width / itemWidthHeight)
         let yNum = Math.floor(height / itemWidthHeight)
         switch (direction) {
@@ -860,7 +868,7 @@
               iconList[currentAppIndex].config['window']['size'] = 'max'
               break
             case 'close':
-              // 如果是安装/卸载窗口的关闭操作则从iconList中移除
+              // 如果是安装/隐藏应用窗口的关闭操作则从iconList中移除
               if (appInfo.hasOwnProperty('action') && ['install', 'uninstall'].includes(appInfo.action)) {
                 if (appInfo.hasOwnProperty('installed') && appInfo.installed) {
                   iconList = iconList.map(item => {
@@ -1151,11 +1159,11 @@
             break
         }
       },
-      // 处理应用安装/卸载
+      // 处理应用安装/隐藏应用
       handleAppInstallOrUninstall: function (tmpInfo) {
         let _t = this
         let appInfo = tmpInfo.data.appInfo
-        // 打开安装/卸载界面
+        // 打开安装/隐藏应用界面
         let openWindow = function () {
           let iconList = [..._t.appData.iconList]
           // 查找单个索引
@@ -1174,7 +1182,7 @@
         }
         // 根据当前操作执行不同逻辑
         switch (tmpInfo.action) {
-          // 打开安装/卸载界面
+          // 打开安装/隐藏应用界面
           case 'openByInstall':
           case 'openByUninstall':
             openWindow()
@@ -1183,7 +1191,7 @@
           case 'doInstall':
             _t.doApplicationInstall(appInfo, tmpInfo.data.callback)
             break
-          // 执行卸载
+          // 执行隐藏应用
           case 'doUninstall':
             _t.doApplicationUninstall(appInfo, tmpInfo.data.callback)
             break
@@ -1210,7 +1218,7 @@
         })
         */
       },
-      // 执行卸载操作
+      // 执行隐藏应用操作
       doApplicationUninstall: async function (appInfo, callback) {
         let _t = this
         // 分发action，调接口
@@ -1223,7 +1231,7 @@
           user_id: _t.userInfo.id
         })
         if (!res || res.status !== 200) {
-          // _t.$Message.error('卸载失败！')
+          // _t.$Message.error('隐藏应用失败！')
           callback && callback(false)
           return
         }
@@ -1242,7 +1250,7 @@
     created: function () {
       let _t = this
       // 初始化MenuBox 与 DesktopIconBox
-      _t.initBox(_t.divBox.show)
+      _t.initBox()
       // 处理格子排序
       _t.handleGridLayout(_t.currentDirection)
       // 初始化渲染
@@ -1269,22 +1277,17 @@
       _t.$utils.bus.$on('platform/application/install', function (tmpInfo) {
         _t.handleAppInstallOrUninstall(tmpInfo)
       })
-      // 监听应用卸载
+      // 监听应用隐藏应用
       _t.$utils.bus.$on('platform/application/uninstall', function (tmpInfo) {
         _t.handleAppInstallOrUninstall(tmpInfo)
       })
       // 监听Menu打开
       _t.$utils.bus.$on('platform/application/Menu/operation', function () {
-        let flag = _t.divBox.show
-        _t.initBox(!flag)
-        _t.divBox.show = !flag
-        _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
+        _t.initBox('change')
       })
       // 监听Menu关闭
-      _t.$utils.bus.$on('platform/application/Menu/close', function (flag) {
-        _t.divBox.show = false
-        _t.initBox(_t.divBox.show)
-        _t.$store.commit('Platform/Menu/menu/operation', _t.divBox)
+      _t.$utils.bus.$on('platform/application/Menu/close', function () {
+        _t.initBox('change')
       })
       let resizeTimer = null
       // 监听窗口大小调整
@@ -1297,7 +1300,7 @@
             console.log('window resize!')
             // 处理格子排序
             _t.handleGridLayout(_t.currentDirection)
-          }, 500)
+          }, 100)
         })()
       }
     },

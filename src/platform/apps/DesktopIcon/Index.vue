@@ -305,7 +305,7 @@
                 type: '',
                 style: ''
               },
-              text: '卸载',
+              text: '隐藏应用',
               enable: true,
               action: {
                 type: 'callback',
@@ -315,7 +315,7 @@
                     ..._t.info,
                     config: {
                       ..._t.info.config,
-                      // 解构应用卸载配置
+                      // 解构应用隐藏应用配置
                       ..._t.info.config.uninstall
                     },
                     // 赋值当前操作为 uninstall

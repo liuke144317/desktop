@@ -93,7 +93,7 @@
           let _t = this
           _t.timeOut = setTimeout(() => {
             _t.detailInfo = {..._t.detailInfo, display: 'none'}
-          }, 500)
+          }, 200)
         }
       }
     }

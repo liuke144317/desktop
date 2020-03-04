@@ -1,7 +1,7 @@
 /**
 * Created by OXOYO on 2018/4/24.
 *
-* 公共卸载界面
+* 公共隐藏应用界面
 */
 
 <style scoped lang="less" rel="stylesheet/less">
@@ -81,7 +81,7 @@
       <div class="loading" v-show="isLoading">
         <Spin fix>
           <Icon class="loading-icon" type="load-c" size=18></Icon>
-          <div class="loading-text">卸载中...</div>
+          <div class="loading-text">隐藏应用中...</div>
         </Spin>
       </div>
       <div
@@ -91,7 +91,7 @@
         <Icon :type="isSuccess ? 'checkmark-circled' : 'close-circled'"></Icon>
         {{ completeMsg }}
       </div>
-      <Button class="button" type="primary" :disabled="isSuccess" v-show="!isLoading" @click="handleUninstall">立即卸载</Button>
+      <Button class="button" type="primary" :disabled="isSuccess" v-show="!isLoading" @click="handleUninstall">立即隐藏应用</Button>
     </div>
   </div>
 </template>
@@ -129,7 +129,7 @@
               _t.isLoading = false
               _t.isComplete = true
               _t.isSuccess = isSuccess
-              _t.completeMsg = msg || (isSuccess ? '卸载成功！' : '卸载失败！')
+              _t.completeMsg = msg || (isSuccess ? '隐藏应用成功！' : '隐藏应用失败！')
             }
           }
         })

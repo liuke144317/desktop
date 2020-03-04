@@ -429,7 +429,7 @@
                       type: '',
                       style: ''
                     },
-                    text: '卸载',
+                    text: '隐藏应用',
                     enable: true,
                     action: {
                       type: 'callback',
@@ -439,7 +439,7 @@
                           ..._t.info,
                           config: {
                             ..._t.info.config,
-                            // 解构应用卸载配置
+                            // 解构应用隐藏应用配置
                             ..._t.info.config.uninstall
                           },
                           // 赋值当前操作为 uninstall
@@ -465,7 +465,6 @@
         let appInfo = {..._t.info}
         // 转换方法
         let handler = function () {
-          console.log('_t.targetWindow', _t.targetWindow.offsetWidth, _t.targetWindow.offsetHeight)
           html2canvas(_t.targetWindow, {
             backgroundColor: null,
             imageTimeout: 0

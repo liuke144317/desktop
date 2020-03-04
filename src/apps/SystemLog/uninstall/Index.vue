@@ -1,7 +1,7 @@
 /**
 * Created by OXOYO on 2018/4/26.
 *
-* 自定义卸载界面
+* 自定义隐藏应用界面
 */
 
 <style scoped lang="less" rel="stylesheet/less">
@@ -72,10 +72,10 @@
       <div class="loading" v-show="isLoading">
         <Spin fix>
           <Icon class="loading-icon" type="load-c" size=18></Icon>
-          <div class="loading-text">卸载中...</div>
+          <div class="loading-text">隐藏应用中...</div>
         </Spin>
       </div>
-      <div class="complete" v-show="isComplete">{{ isSuccess ? '卸载成功！' : '卸载失败！' }}</div>
+      <div class="complete" v-show="isComplete">{{ isSuccess ? '隐藏应用成功！' : '隐藏应用失败！' }}</div>
       <Button class="button" type="primary" v-show="!isLoading" @click="handleUninstall">立即卸载</Button>
     </div>
   </div>
