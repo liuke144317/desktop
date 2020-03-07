@@ -8,7 +8,7 @@
         </div>
         <div class="parting-line">|</div>
         <div class="module" @click="operationMenu">
-          自定义模块名称
+          {{selectModel}}
         </div>
       </div>
       <div class="hd-right">
@@ -48,10 +48,16 @@
 
 <script>
     import {Badge} from 'element-ui'
+    import { mapState } from 'vuex'
     export default {
       name: 'Index',
       components: {
         Badge
+      },
+      computed: {
+        ...mapState('Platform/Header', {
+          selectModel: state => state.selectModel
+        })
       },
       data () {
         return {
@@ -95,6 +101,9 @@
             _t.detailInfo = {..._t.detailInfo, display: 'none'}
           }, 200)
         }
+      },
+      created () {
+        // let _t = this
       }
     }
 </script>

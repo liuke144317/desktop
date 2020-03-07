@@ -5,5 +5,6 @@ export default {
       width: '200px'
     },
     DesktopIconStyle: {}
-  }
+  },
+  menuList: []
 }

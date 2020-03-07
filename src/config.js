@@ -43,3 +43,18 @@ export const System = {
   logo: './static/logo.png',
   copyright: '© 2017 - 2018 OXOYO'
 }
+
+// 页面宽高配置
+export const pageSize = {
+  // 默认所有应用窗口宽高
+  width: '600',
+  height: '450',
+  // 特殊指定某应用宽高
+  appoint: [
+    {
+      appName: 'UIComponent',
+      width: '700',
+      height: '500'
+    }
+  ]
+}

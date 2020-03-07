@@ -11,13 +11,18 @@ export default {
     return res
   },
   // 获取应用列表
-  'user/application/list': async ({ commit }, payload) => {
-    let res = await Api.user.getApplicationListByUserId(payload)
-    return res
-  },
+  // 'user/application/list': async ({ commit }, payload) => {
+  //   let res = await Api.user.getApplicationListByUserId(payload)
+  //   console.log('res1111111', res)
+  //   return res
+  // },
   // 获取导航栏列表
   'user/getNavSlider/list': () => {
     let res = Api.user.getNavSliderList()
     return res
+  },
+  // 获取应用列表
+  'user/application/list': () => {
+    return Api.user.getApplicationList()
   }
 }

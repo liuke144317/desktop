@@ -31,7 +31,6 @@
   import { mapState } from 'vuex'
   import utils from '@/global/utils'
   const moduleName = utils.store.getModuleName('Platform')
-
   export default {
     name: 'Admin',
     data () {
@@ -45,7 +44,7 @@
           app_publish: 1,
           app_title: '全局UI组件',
           app_type: 0,
-          config: '{"app":{"icon":"./static/apps/UserInfo/logo.jpg","id":"","name":"UserInfo","title":"全局UI组件展示"},"desktopIcon":{"style":{"left":"0px","top":"0px"}},"install":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"taskBar":{"isPinned":true},"uninstall":{"taskBar":{"isPinned":false},"window":{"enableResize":["custom","close"],"size":"custom","status":"close","style":{"height":"300px","left":"calc(50% - 200px)","top":"calc(50% - 150px)","width":"400px"},"type":"modal"}},"window":{"enableResize":["custom","small","min","max","middle","reset","close"],"size":"custom","status":"close","style":{"height":"450px","left":"calc(50% - 500px)","top":"calc(50% - 400px)","width":"600px"},"type":"modal"}}',
+          app_icon: './static/apps/UserInfo/logo.jpg',
           create_time: '2017-07-14T17:06:06.000Z',
           id: '',
           private: 0,
@@ -318,8 +317,7 @@
       getUserAppData: async function () {
         let _t = this
         // TODO 1.分发action，获取用户应用数据
-        let res = await _t.$store.dispatch(_t.$utils.store.getType('Admin/user/application/list', 'Platform'))
-        res.data.list = [...res.data.list, this.userSetting]
+        let res = _t.filterData([...await _t.$store.dispatch(_t.$utils.store.getType('Admin/user/application/list', 'Platform')), _t.userSetting])
         if (!res || res.status !== 200) {
           _t.$Message.error('获取用户应用列表失败')
           return
@@ -349,12 +347,49 @@
           _t.$utils.bus.$emit('platform/desktopIcon/render')
         })
       },
+      filterData (data) {
+        let _t = this
+        let pageConfig = _t.$Config
+        console.log('pageConfig', pageConfig)
+        let config = {
+          'app': {'icon': '', 'id': '', 'name': '', 'title': ''},
+          'desktopIcon': {'style': {'left': '0px', 'top': '0px'}},
+          'install': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},
+          'taskBar': {'isPinned': true},
+          'uninstall': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},
+          'window': {'enableResize': ['custom', 'small', 'min', 'max', 'middle', 'reset', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '450px', 'left': 'calc(50% - 300px)', 'top': 'calc(50% - 300px)', 'width': '600px'}, 'type': 'modal'}}
+        let list = data.map(item => {
+          config.app.name = item.app_name
+          config.app.icon = item.app_icon
+          config.app.title = item.app_title
+          let index = pageConfig.pageSize.appoint.findIndex(appointItem => appointItem.appName === item.app_name)
+          let height, width, left, top
+          if (index !== -1) {
+            height = pageConfig.pageSize.appoint[index].height + 'px'
+            width = pageConfig.pageSize.appoint[index].width + 'px'
+            left = 'calc(50% - ' + (pageConfig.pageSize.appoint[index].width / 2) + 'px)'
+            top = 'calc(50% - ' + (pageConfig.pageSize.appoint[index].height / 2) + 'px)'
+          } else {
+            height = pageConfig.pageSize.height + 'px'
+            width = pageConfig.pageSize.width + 'px'
+            left = 'calc(50% - ' + (pageConfig.pageSize.width / 2) + 'px)'
+            top = 'calc(50% - ' + (pageConfig.pageSize.height / 2) + 'px)'
+          }
+          config.window.style.height = height
+          config.window.style.width = width
+          config.window.style.left = left
+          config.window.style.top = top
+          return {...item, config: JSON.stringify(config)}
+        })
+        return {status: 200, msg: '获取用户应用列表成功', data: {count: list.length, list: list}}
+      },
       // 获取NavSlider导航栏数据
       getNavSliderList () {
         let _t = this
         let res = _t.$store.dispatch(_t.$utils.store.getType('Admin/user/getNavSlider/list', 'Platform'))
         res.then(resolve => {
           _t.appData.navSliderLIst = resolve
+          // _t.$store.commit('Platform/Menu/list/set',)
         }, reject => {
           console.log('resolve', reject)
         })
@@ -371,6 +406,10 @@
         // 监听事件，刷新用户应用数据
         _t.$utils.bus.$on('Admin/appData/refresh', function () {
           _t.getUserAppData()
+        })
+        // 监听header中selectModel修改
+        _t.$utils.bus.$on('apps/Header/selectModel/set', (data) => {
+          _t.$store.commit('Platform/Header/selectModel/set', data)
         })
       }
     }
