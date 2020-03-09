@@ -48,6 +48,8 @@ Vue.use(Vuex)
 Vue.use(iView)
 import XDrag from './global/directives/XDrag'
 Vue.use(XDrag)
+import defaultImg from './global/directives/DefaultImg'
+Vue.use(defaultImg)
 
 // 注册全局 Cookies
 Vue.prototype.$Cookies = Cookies

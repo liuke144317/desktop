@@ -6,5 +6,9 @@ export default {
     },
     DesktopIconStyle: {}
   },
-  menuList: []
+  // 菜单列表
+  menu: {
+    menuList: [],
+    menuIndex: 0 // 列表默认选中位置下标
+  }
 }

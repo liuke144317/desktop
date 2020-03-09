@@ -57,7 +57,6 @@
         appData: {
           list: [],
           iconList: [],
-          navSliderLIst: [],
           showTitle: true
         },
         navSliderData: []
@@ -68,6 +67,9 @@
         userInfo: state => {
           return state.userInfo
         }
+      }),
+      ...mapState('Platform/Menu', {
+        menu: state => state.menu
       })
     },
     methods: {
@@ -350,10 +352,9 @@
       filterData (data) {
         let _t = this
         let pageConfig = _t.$Config
-        console.log('pageConfig', pageConfig)
         let config = {
           'app': {'icon': '', 'id': '', 'name': '', 'title': ''},
-          'desktopIcon': {'style': {'left': '0px', 'top': '0px'}},
+          'desktopIcon': {'style': {'left': '0px', 'top': '0px'}, isShow: true},
           'install': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},
           'taskBar': {'isPinned': true},
           'uninstall': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},
@@ -388,8 +389,7 @@
         let _t = this
         let res = _t.$store.dispatch(_t.$utils.store.getType('Admin/user/getNavSlider/list', 'Platform'))
         res.then(resolve => {
-          _t.appData.navSliderLIst = resolve
-          // _t.$store.commit('Platform/Menu/list/set',)
+          _t.$store.commit('Platform/Menu/list/set', {..._t.menu, menuList: resolve})
         }, reject => {
           console.log('resolve', reject)
         })
@@ -406,10 +406,6 @@
         // 监听事件，刷新用户应用数据
         _t.$utils.bus.$on('Admin/appData/refresh', function () {
           _t.getUserAppData()
-        })
-        // 监听header中selectModel修改
-        _t.$utils.bus.$on('apps/Header/selectModel/set', (data) => {
-          _t.$store.commit('Platform/Header/selectModel/set', data)
         })
       }
     }

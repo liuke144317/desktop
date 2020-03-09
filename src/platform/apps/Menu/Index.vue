@@ -7,27 +7,14 @@
       </div>
     </div>
     <el-menu
-      default-active="1"
+      default-active="0"
       class="el-menu-vertical-demo"
       background-color="#282B34"
       text-color="#fff"
-      @open=""
-      @close="">
-      <el-menu-item index="1">
-        <i class="el-icon-location"></i>
-        <span slot="title">导航一</span>
-      </el-menu-item>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+      @select="select">
+      <el-menu-item v-for="(item, index) in menu.menuList" :index="index.toString()" :key="index">
+        <img :src="item.imgSrc" alt="" width="18px" height="18px" v-default-img="imgUrl">
+        <span slot="title" v-text="item.text"></span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -35,6 +22,7 @@
 
 <script>
     import {Menu, Submenu, MenuItem, MenuItemGroup} from 'element-ui'
+    import {mapState} from 'vuex'
     export default {
       name: 'Index',
       components: {
@@ -43,10 +31,27 @@
         'el-menu-item': MenuItem,
         'el-menu-item-group': MenuItemGroup
       },
+      data () {
+        return {
+          imgUrl: 'static/apps/Menu/yellowFolder.png'
+        }
+      },
+      computed: {
+        ...mapState('Platform/Menu', {
+          menu: state => state.menu
+        })
+      },
       methods: {
+        // 关闭菜单
         close () {
           let _t = this
           _t.$utils.bus.$emit('platform/application/Menu/close')
+        },
+        // select选中改变事件
+        select (index) {
+          let _t = this
+          _t.$store.commit('Platform/Menu/list/set', {..._t.menu, menuIndex: index})
+          _t.$utils.bus.$emit('platform/application/Menu/select/change')
         }
       }
     }

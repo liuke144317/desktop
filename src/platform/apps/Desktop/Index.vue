@@ -54,7 +54,7 @@
           <component
             :is="childComponents.DesktopIcon"
             v-for="(item, index) in appData.iconList"
-            v-if="item.action !== 'install' || (item.action === 'install' && item.installed)"
+            v-if="item.app_category === menu.menuList[menu.menuIndex].sapplytype"
             :key="'desktop_icon_' + index"
             :info="item"
             :showTitle="appData.showTitle"
@@ -91,6 +91,9 @@
     },
     data () {
       return {
+        // 应用类型
+        // vuex应该有一个统一的记录值，header和desktop在created时都读取这个值，来初始化，change时也是监听这个值的变化，所以他应该在Menu中
+        // appCategory: '',
         gridArr: [],
         // 每个图标宽高80px margin 10px
         itemWidthHeight: 100,
@@ -173,7 +176,8 @@
         userInfo: state => state.userInfo
       }),
       ...mapState('Platform/Menu', {
-        divBox: state => state.divBox
+        divBox: state => state.divBox,
+        menu: state => state.menu
       }),
       openedWindowList: function () {
         let _t = this
@@ -201,6 +205,8 @@
       },
       // 处理iconList
       handleIconList: function (iconList) {
+        console.log('iconList', iconList)
+        // 过滤掉被隐藏icon
         let _t = this
         let flag = true
         let firstGrid = _t.gridArr[0][0]
@@ -347,7 +353,7 @@
         // 每个图标宽高80px margin 10px
         let itemWidthHeight = _t.itemWidthHeight || 100
         // 处理宽高，保证存在最小宽高
-        // 判断左侧菜单是否打开，yes:width-菜单宽度
+        // 判断左侧菜单是否打开，yes: width - 菜单宽度
         let divBoxWidth = '0'
         if (_t.divBox.show) {
           divBoxWidth = _t.divBox.MenuStyle.width
@@ -1288,6 +1294,10 @@
       // 监听Menu关闭
       _t.$utils.bus.$on('platform/application/Menu/close', function () {
         _t.initBox('change')
+      })
+      // 监听Menu中select改变
+      _t.$utils.bus.$on('platform/application/Menu/select/change', function () {
+        _t.handleGridLayout(_t.currentDirection)
       })
       let resizeTimer = null
       // 监听窗口大小调整

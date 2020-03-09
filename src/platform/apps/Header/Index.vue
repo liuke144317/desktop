@@ -7,8 +7,8 @@
           </div>
         </div>
         <div class="parting-line">|</div>
-        <div class="module" @click="operationMenu">
-          {{selectModel}}
+        <div class="module" @click="operationMenu" v-if="menu.menuList&&menu.menuList.length!==0">
+          {{menu.menuList[menu.menuIndex].text}}
         </div>
       </div>
       <div class="hd-right">
@@ -55,8 +55,8 @@
         Badge
       },
       computed: {
-        ...mapState('Platform/Header', {
-          selectModel: state => state.selectModel
+        ...mapState('Platform/Menu', {
+          menu: state => state.menu
         })
       },
       data () {
@@ -101,9 +101,6 @@
             _t.detailInfo = {..._t.detailInfo, display: 'none'}
           }, 200)
         }
-      },
-      created () {
-        // let _t = this
       }
     }
 </script>

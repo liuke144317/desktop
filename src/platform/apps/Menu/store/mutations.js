@@ -3,6 +3,7 @@ export default{
     state.Menu = JSON.parse(JSON.stringify(data))
   },
   'list/set': (state, data) => {
-    state.menuList = data
+    // state.menu.menuList = data
+    state.menu = data
   }
 }

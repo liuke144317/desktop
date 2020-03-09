@@ -33,7 +33,7 @@ export default {
     // 获取应用列表
     getApplicationList: () => {
       let res = [{
-        app_category: '',
+        app_category: '综合查询',
         app_description: '搜罗所有应用。',
         app_id: 2,
         app_name: 'ApplicationMarket',
@@ -49,7 +49,7 @@ export default {
         user_id: 1,
         user_type: 0
       }, {
-        app_category: '',
+        app_category: '综合查询',
         app_description: '个人中心包含用户的个人信息。',
         app_id: 3,
         app_name: 'PersonalCenter',
@@ -65,7 +65,7 @@ export default {
         user_id: 1,
         user_type: 0
       }, {
-        app_category: '',
+        app_category: '园区租赁',
         app_description: '平台系统设置。',
         app_id: 4,
         app_name: 'SystemSetting',
@@ -81,7 +81,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '3',
+        app_category: '园区租赁',
         app_description: '查看系统日志',
         app_id: 16,
         app_name: 'SystemLog',
@@ -97,7 +97,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '3',
+        app_category: '园区资产与维修',
         app_description: '百度翻译',
         app_id: 8,
         app_name: 'BaiduFanyi',
@@ -113,7 +113,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '3',
+        app_category: '基础信息',
         app_description: 'OXOYO的Blog',
         app_id: 14,
         app_name: 'Blog',
@@ -129,7 +129,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '2',
+        app_category: '基础信息',
         app_description: '图灵聊天机器人',
         app_id: 12,
         app_name: 'iChat',
@@ -145,7 +145,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '6',
+        app_category: '系统管理',
         app_description: '高德地图',
         app_id: 9,
         app_name: 'AmapDitu',
@@ -161,7 +161,7 @@ export default {
         user_id: 1,
         user_type: 1
       }, {
-        app_category: '3',
+        app_category: '系统管理',
         app_description: '在线白板',
         app_id: 18,
         app_name: 'XBoard',
