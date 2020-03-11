@@ -1,3 +1,6 @@
+/**
+* function:页面Header部分
+*/
 <template>
     <div class="header-box">
       <div class="hd-left">
@@ -32,7 +35,7 @@
               </div>
               <div class="user-option">
                 <div class="uo-item">个人用户</div>
-                <div class="uo-item">退出登录</div>
+                <div class="uo-item" @click.stop="existLogin">退出登录</div>
               </div>
             </div>
         </div>
@@ -57,6 +60,14 @@
       computed: {
         ...mapState('Platform/Menu', {
           menu: state => state.menu
+        }),
+        ...mapState('Platform', {
+          userInfo: state => {
+            return state.userInfo
+          }
+        }),
+        ...mapState('Platform/Admin', {
+          _appData: state => state._appData
         })
       },
       data () {
@@ -100,7 +111,25 @@
           _t.timeOut = setTimeout(() => {
             _t.detailInfo = {..._t.detailInfo, display: 'none'}
           }, 200)
+        },
+        // 退出登录
+        existLogin () {
+          let _t = this
+          // 初始化appData
+          _t.$store.commit('Platform/Admin/appData/set', _t._appData)
+          // 修改登录状态
+          _t.$store.commit(_t.$utils.store.getType('userInfo/update', 'Platform'), {
+            ..._t.userInfo,
+            isLogin: false
+          })
         }
+      },
+      beforeDestroy () {
+        let _t = this
+        _t.$utils.bus.$off([
+          'platform/application/Menu/operation',
+          'platform/application/Notice/show'
+        ])
       }
     }
 </script>

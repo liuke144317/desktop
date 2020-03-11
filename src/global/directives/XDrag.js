@@ -39,18 +39,16 @@ XDrag.install = function (Vue) {
             }
             // 绑定事件
             bar.onmousedown = function (event) {
-              // let leftPer = Array.prototype.slice.call(target.style.left, target.style.left.indexOf('-') + 2, target.style.left.indexOf('p')).join('')
-              // let topPer = Array.prototype.slice.call(target.style.top, target.style.top.indexOf('-') + 2, target.style.top.indexOf('p')).join('')
-              // 窗口最大时禁止拖拽
-              let parentClassName = $(event.target).closest('.app-window').attr('class')
-              if (parentClassName.indexOf('max') !== -1) {
-                return
-              }
               if (event.stopPropagation) {
                 event.stopPropagation()
               }
               if (event.preventDefault) {
                 event.preventDefault()
+              }
+              // 窗口最大时禁止拖拽
+              let parentClassName = $(event.target).closest('.app-window').attr('class')
+              if (parentClassName.indexOf('max') !== -1) {
+                return
               }
               dragInfo.flag = true
               // 添加class
@@ -63,10 +61,6 @@ XDrag.install = function (Vue) {
                 left: parseFloat(target.offsetLeft),
                 top: parseFloat(target.offsetTop)
               }
-              // dragInfo.position = {
-              //   left: leftPer,
-              //   top: topPer
-              // }
               if (config.drag.callback && typeof config.drag.callback.start === 'function') {
                 config.drag.callback.start(dragInfo.position)
               }
@@ -112,11 +106,6 @@ XDrag.install = function (Vue) {
                       top: dragInfo.position.top + dis.y + 'px',
                       margin: 0
                     }
-                    // dragInfo.done = {
-                    //   left: 'calc(50% - ' + (parseInt(dragInfo.position.left) - dis.x) + 'px)',
-                    //   top: 'calc(50% - ' + (parseInt(dragInfo.position.top) - dis.y) + 'px)',
-                    //   margin: 0
-                    // }
                     Object.keys(dragInfo.done).map(function (key) {
                       target.style[key] = dragInfo.done[key]
                     })

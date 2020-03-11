@@ -37,7 +37,7 @@
       return {
         // 个人用户
         userSetting: {
-          app_category: ' ',
+          app_category: '系统管理',
           app_description: '全局UI组件',
           app_id: '',
           app_name: 'UIComponent',
@@ -84,7 +84,6 @@
       handleLeftClick: function () {
         let _t = this
         // 广播事件
-        _t.$utils.bus.$emit('platform/startMenu/hide')
         _t.$utils.bus.$emit('platform/contextMenu/hide')
       },
       // 桌面右键点击
@@ -354,7 +353,7 @@
         let pageConfig = _t.$Config
         let config = {
           'app': {'icon': '', 'id': '', 'name': '', 'title': ''},
-          'desktopIcon': {'style': {'left': '0px', 'top': '0px'}, isShow: true},
+          'desktopIcon': {'style': {'left': '0px', 'top': '0px'}, 'isShow': true},
           'install': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},
           'taskBar': {'isPinned': true},
           'uninstall': {'taskBar': {'isPinned': false}, 'window': {'enableResize': ['custom', 'close'], 'size': 'custom', 'status': 'close', 'style': {'height': '300px', 'left': 'calc(50% - 200px)', 'top': 'calc(50% - 150px)', 'width': '400px'}, 'type': 'modal'}},

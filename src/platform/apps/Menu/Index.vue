@@ -53,6 +53,13 @@
           _t.$store.commit('Platform/Menu/list/set', {..._t.menu, menuIndex: index})
           _t.$utils.bus.$emit('platform/application/Menu/select/change')
         }
+      },
+      beforeDestroy () {
+        let _t = this
+        _t.$utils.bus.$off([
+          'platform/application/Menu/close',
+          'platform/application/Menu/select/change'
+        ])
       }
     }
 </script>

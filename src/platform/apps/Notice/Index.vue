@@ -1,3 +1,6 @@
+/**
+* function:右侧未读消息面板
+*/
 <template>
   <div class="Drawer-box">
     <el-drawer

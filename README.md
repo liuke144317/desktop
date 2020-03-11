@@ -92,7 +92,6 @@
         \_ DekstopWidget        // 桌面控件
         \_ Home                 // 前台容器
         \_ Login                // 前台登录
-        \_ StartMenu            // 开始菜单
         \_ TaskBar              // 任务栏
         \_ TaskBarIcon          // 任务栏图标
         \_ TaskBarWidget        // 任务栏控件

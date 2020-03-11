@@ -34,7 +34,6 @@
       handleLeftClick: function () {
         let _t = this
         // 广播事件
-        _t.$utils.bus.$emit('platform/startMenu/hide')
         _t.$utils.bus.$emit('platform/contextMenu/hide')
       },
       // 桌面右键点击

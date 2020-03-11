@@ -1,3 +1,6 @@
+/*
+* function:提示框
+*/
 <template>
   <div class="modal-box">
     <Modal
@@ -7,7 +10,6 @@
       @on-ok="ok"
       @on-cancel="cancel"
       @on-visible-change="change">
-      >
     </Modal>
   </div>
 </template>

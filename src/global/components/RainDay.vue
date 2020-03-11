@@ -24,8 +24,6 @@
 </template>
 
 <script>
-  import RainyDay from '../lib/rainyday.js'
-
   export default {
     name: 'RainDay',
     props: {
@@ -57,36 +55,6 @@
         type: String,
         default: './static/win7/wallpaper.jpg'
       }
-    },
-    methods: {
-      init: function () {
-        let _t = this
-        let el = _t.$el
-        let img = document.querySelector('#rainDayBackground')
-        img.crossOrigin = 'Anonymous'
-        img.onload = function () {
-          let engine = new RainyDay({
-            image: this,
-            parentElement: el,
-            ..._t.config
-          })
-          for (let i in _t.rain) {
-            let item = _t.rain[i]
-            if (item.drops) {
-              if (item.period) {
-                engine.rain(item.drops, item.period)
-              } else {
-                engine.rain(item.drops)
-              }
-            }
-          }
-        }
-      }
-    },
-    mounted: function () {
-      let _t = this
-      // 初始化
-      _t.init()
     }
   }
 </script>

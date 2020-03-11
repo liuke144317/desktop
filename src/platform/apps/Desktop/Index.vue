@@ -54,7 +54,7 @@
           <component
             :is="childComponents.DesktopIcon"
             v-for="(item, index) in appData.iconList"
-            v-if="item.app_category === menu.menuList[menu.menuIndex].sapplytype"
+            v-if="item.config.desktopIcon.isShow === true"
             :key="'desktop_icon_' + index"
             :info="item"
             :showTitle="appData.showTitle"
@@ -169,7 +169,19 @@
     },
     computed: {
       ...mapState('Platform/Admin', {
-        appData: state => state.appData,
+        appData: function (state) {
+          let _t = this
+          console.log('appData变更', state.appData)
+          state.appData.iconList.map(item => {
+            let sapplyType = _t.menu.menuList[_t.menu.menuIndex].sapplytype
+            if (item.app_category !== sapplyType) {
+              item.config.desktopIcon.isShow = false
+            } else {
+              item.config.desktopIcon.isShow = true
+            }
+          })
+          return state.appData
+        },
         _appData: state => state._appData
       }),
       ...mapState('Platform', {
@@ -181,6 +193,7 @@
       }),
       openedWindowList: function () {
         let _t = this
+        console.log('触发', _t.appData)
         let windowArr = _t.appData.iconList.filter(item => item.config.window.status !== 'close')
         return windowArr
       }
@@ -205,12 +218,13 @@
       },
       // 处理iconList
       handleIconList: function (iconList) {
-        console.log('iconList', iconList)
-        // 过滤掉被隐藏icon
         let _t = this
         let flag = true
         let firstGrid = _t.gridArr[0][0]
         for (let item of iconList) {
+          if (item.config.desktopIcon.isShow === false) { // 跳过被应该被隐藏的icon
+            continue
+          }
           let xVal = 0
           let yVal = 0
           // FIXME 取中心点坐标
@@ -871,6 +885,7 @@
                 ...currentStyle,
                 ..._t.windowStyleBySize['max']
               }
+              console.log('iconList[currentAppIndex].config[\'window\'][\'style\']', iconList[currentAppIndex].config['window']['style'])
               iconList[currentAppIndex].config['window']['size'] = 'max'
               break
             case 'close':
@@ -914,6 +929,7 @@
             ..._t.appData,
             iconList: iconList
           })
+          console.log('_t.appData', _t.appData)
           callback && callback()
         }
         let handleZIndexChangeByWindow = function (data) {
