@@ -9,8 +9,10 @@ import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
 import {post, get} from '@/global/utils/https'
 // 导入UI库
-import iView from 'iview'
+// import iView from 'iview'
 import './themes/index.less'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
 // 导入 动画库
 import 'animate.css/animate.min.css'
 // 导入 cookie插件
@@ -45,7 +47,8 @@ Vue.config.productionTip = isDev
 
 // 注册插件
 Vue.use(Vuex)
-Vue.use(iView)
+// Vue.use(iView)
+Vue.use(ViewUI)
 import XDrag from './global/directives/XDrag'
 Vue.use(XDrag)
 import defaultImg from './global/directives/DefaultImg'

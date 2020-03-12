@@ -3,7 +3,7 @@
  */
 
 const XDrag = {}
-
+import $ from 'jquery'
 XDrag.installed = false
 XDrag.install = function (Vue) {
   if (XDrag.installed) {

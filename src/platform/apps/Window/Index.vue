@@ -223,7 +223,8 @@
           @mouseup.stop
           @click.stop.prevent="handleWindowSize('min')"
         >
-          <Icon type="minus"></Icon>
+          <Icon type="md-remove" />
+          <!--<Icon type="minus"></Icon>-->
         </div>
         <!-- 最大化 -->
         <div
@@ -234,7 +235,8 @@
           @mouseup.stop
           @click.stop.prevent="handleWindowSize('max')"
         >
-          <Icon type="android-checkbox-outline-blank"></Icon>
+          <Icon type="md-square-outline" />
+          <!--<Icon type="android-checkbox-outline-blank"></Icon>-->
         </div>
         <!-- 还原 -->
         <div
@@ -256,7 +258,8 @@
           @mouseup.stop
           @click.stop.prevent="handleWindowSize('close')"
         >
-          <Icon type="close"></Icon>
+          <Icon type="md-close" />
+          <!--<Icon type="close"></Icon>-->
         </div>
       </div>
     </div>
@@ -581,6 +584,11 @@
         let _t = this
         // 分发mutations，更新窗口样式
         let appInfo = {..._t.info}
+        // 窗口最大化时不执行函数
+        let size = appInfo.config.window.size
+        if (size === 'max') {
+          return
+        }
         let bodyWidth = document.body.clientWidth
         let bodyHeight = document.body.clientHeight - 40
         let splitScreenStyle = {}

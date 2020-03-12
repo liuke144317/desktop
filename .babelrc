@@ -8,6 +8,9 @@
     {
       "libraryName": "element-ui",
       "styleLibraryName": "theme-chalk"
+    },{
+      "libraryName": "view-design",
+      "libraryDirectory": "src/components"
     }
   ]],
   "env": {

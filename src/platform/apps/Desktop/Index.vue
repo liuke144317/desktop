@@ -171,7 +171,6 @@
       ...mapState('Platform/Admin', {
         appData: function (state) {
           let _t = this
-          console.log('appData变更', state.appData)
           state.appData.iconList.map(item => {
             let sapplyType = _t.menu.menuList[_t.menu.menuIndex].sapplytype
             if (item.app_category !== sapplyType) {
@@ -193,7 +192,6 @@
       }),
       openedWindowList: function () {
         let _t = this
-        console.log('触发', _t.appData)
         let windowArr = _t.appData.iconList.filter(item => item.config.window.status !== 'close')
         return windowArr
       }
@@ -885,7 +883,6 @@
                 ...currentStyle,
                 ..._t.windowStyleBySize['max']
               }
-              console.log('iconList[currentAppIndex].config[\'window\'][\'style\']', iconList[currentAppIndex].config['window']['style'])
               iconList[currentAppIndex].config['window']['size'] = 'max'
               break
             case 'close':
@@ -929,7 +926,6 @@
             ..._t.appData,
             iconList: iconList
           })
-          console.log('_t.appData', _t.appData)
           callback && callback()
         }
         let handleZIndexChangeByWindow = function (data) {

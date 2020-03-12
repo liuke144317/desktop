@@ -45,12 +45,5 @@
   .vertical-center-modal .ivu-modal{
     top: 0!important;
     margin: 0;
-    border-radius: 18px;
-  }
-  .vertical-center-modal .ivu-modal-content{
-    border-radius: 18px;
-  }
-  .ivu-modal-footer .ivu-btn-primary{
-    border-radius: 10px;
   }
 </style>
