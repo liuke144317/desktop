@@ -31,6 +31,7 @@
           } else {
             $('body>.layout-platform').css({'filter': 'blur(0)'})
           }
+          this.$emit('change')
         }
       }
     }
