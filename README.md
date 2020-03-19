@@ -102,7 +102,7 @@
     \_ App.vue                  // 根入口组件
     \_ config.js                // 根配置信息
     \_ main.js                  // 根入口js
-    \_ routers.js               // 根路由js
+    \_ router.js               // 根路由js
   \_ static                     // 静态文件目录
   \_ index.html                 // 根入口html
 ```

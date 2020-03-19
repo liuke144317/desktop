@@ -108,7 +108,7 @@
     class="desktop-icon"
     @mousedown.left="mouseDownHandle"
     @mouseup.left="mouseUpHandle"
-    @dblclick="openApp"
+    @click="openApp"
     @contextmenu.stop.prevent="handleRightClick($event)"
     draggable="true"
     @dragstart="handleDragStart"

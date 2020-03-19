@@ -78,4 +78,7 @@ module.exports = {
       "window.jQuery": "jquery"
     })
   ],
+  externals: {
+    "AMap": "AMap"
+  }
 }

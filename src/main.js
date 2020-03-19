@@ -31,6 +31,7 @@ import appsStore from './store/apps/index'
 import globalComponents from './global/components'
 
 import '../static/iconfont/iconfont.css'
+import router from './router.js'
 globalComponents.register(Vue)
 // 导入 全局插件
 // import plugin from './global/plugin'
@@ -148,6 +149,7 @@ const storeInstance = new Vuex.Store({
 
 // 启动应用
 new Vue({
+  router,
   store: storeInstance,
   render: h => h(App)
 }).$mount('#app')

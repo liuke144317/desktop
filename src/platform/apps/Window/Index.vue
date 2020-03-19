@@ -16,7 +16,7 @@
     /*border: 1px solid #fff;*/
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);
     writing-mode: horizontal-tb;
-    transition: all .3s ease-out;
+    /*transition: all .3s ease-out;*/
 
     &.app-window-small {
       /*
@@ -91,24 +91,24 @@
         cursor: ns-resize;
         top: 0;
         width: 100%;
-        height: 2px;
+        height: 5px;
       }
       &.resize-right-border {
         cursor: ew-resize;
         right: 0;
-        width: 2px;
+        width: 5px;
         height: 100%;
       }
       &.resize-bottom-border {
         cursor: ns-resize;
         bottom: 0;
         width: 100%;
-        height: 2px;
+        height: 5px;
       }
       &.resize-left-border {
         cursor: ew-resize;
         left: 0;
-        width: 2px;
+        width: 5px;
         height: 100%;
       }
     }
@@ -166,7 +166,7 @@
       z-index: 2000;
       /*overflow: auto;*/
       width: 100%;
-      padding: 0 10px 10px;
+      padding: 0 5px 5px;
       /*background: #fff;*/
     }
   }
