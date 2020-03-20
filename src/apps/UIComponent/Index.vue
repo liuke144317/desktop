@@ -5,8 +5,8 @@
 */
 <template>
   <div class="box">
-    <Tabs v-model="name1" :animated="false">
-      <TabPane label="UI组件" name="name1">
+    <Tabs v-model="name1" :animated="false" name="tab1">
+      <TabPane label="UI组件" tab="tab1">
         <ModalBox :data = "data1" @cancel="cancel" @ok="ok"></ModalBox>
         <Dialog :data = "data2">
           <div slot="body">
@@ -21,11 +21,31 @@
         <Button class="btn1" type="primary" @click="data2.show = true">有dataTable的dialog弹框</Button>
         <Button class="btn1" type="primary" @click="loading">Loading加载</Button>
         <Button class="btn1" type="primary" @click="message">Message全局提示</Button>
+        <Select style="width:200px;margin: 10px 0 0 0">
+          <Option value="New York">New York</Option>
+          <Option value="London">London</Option>
+        </Select>
+        <Poptip placement="bottom-end">
+          <div slot="content">
+            <Icon type="ios-create-outline" />附件
+            <Divider style="margin: 2px"/>
+            <Icon type="md-albums" />修改
+            <Divider style="margin: 2px"/>
+            <Icon type="ios-appstore-outline" />详情
+            <Divider style="margin: 2px"/>
+            <Icon type="md-at" />删除</div>
+          <Button class="btn1" type="primary" style="margin: 10px 0 0">操作<Icon type="ios-arrow-down" /></Button>
+        </Poptip>
+        <ButtonGroup style="margin:10px 0 0">
+          <Button type="info">按钮组1<Icon type="md-add" /></Button>
+          <Button type="success">按钮组2<Icon type="md-at" /></Button>
+          <Button type="warning">按钮组3<Icon type="ios-trash" /></Button>
+        </ButtonGroup>
       </TabPane>
-      <TabPane label="地图" name="name2">
+      <TabPane label="地图" tab="tab1">
         <div id="map"></div>
       </TabPane>
-      <TabPane label="eCharts" name="name3">
+      <TabPane label="eCharts" tab="tab1">
         <div style="display: flex;height: 50%">
           <LineEChart style="display:inline-block;width: 50%;height: 100%" :data="lineChartData"></LineEChart>
           <barEChart style="display:inline-block;width: 50%;height: 100%" :data="barChartData"></barEChart>
@@ -35,11 +55,22 @@
           <radarEChart style="display:inline-block;width: 50%;height: 100%" :data="radarEChart"></radarEChart>
         </div>
       </TabPane>
-      <TabPane label="数据表格" name="name4">
-        <dataTable :columns="columns1" :data="table_data"></dataTable>
+      <TabPane label="数据表格" tab="tab1" style="overflow: auto">
+        <Divider>展开子项与父项保持一致</Divider>
+        <dataTable :columns="columns1" :data="table_data1"></dataTable>
+        <Divider>展开子项与父项不一致</Divider>
+        <dataTable :columns="columns2" :data="table_data2"></dataTable>
       </TabPane>
-      <TabPane label="页面跳转" name="name5">
+      <TabPane label="页面跳转" tab="tab1">
         页面跳转
+      </TabPane>
+      <TabPane label="带放大功能的轮播" tab="tab1">
+        <Carousel style="width: 100%"></Carousel>
+      </TabPane>
+      <TabPane label="panel" tab="tab1">
+        <div style="width: 100%;height: 100%;background: #609ad9;overflow: hidden;">
+          <Panel></Panel>
+        </div>
       </TabPane>
     </Tabs>
   </div>
@@ -48,12 +79,14 @@
     import ModalBox from '@/platform/chunks/Modal/confirm/Index.vue'
     import Dialog from '@/platform/chunks/Modal/dialog/Index.vue'
     import dataTable from '@/platform/chunks/DataTable/Index.vue'
-    import {Spin} from 'view-design'
+    import {Spin, Select, Option} from 'view-design'
     import LineEChart from '@/platform/chunks/ECharts/lineChart.vue'
     import barEChart from '@/platform/chunks/ECharts/barChart.vue'
     import pieEChart from '@/platform/chunks/ECharts/pieChart.vue'
     import radarEChart from '@/platform/chunks/ECharts/radarChart.vue'
+    import Carousel from '@/platform/chunks/Carousel/Index.vue'
     import AMap from 'AMap'
+    import Panel from '@/platform/chunks/Panel/Index.vue'
     export default {
       name: 'Index',
       components: {
@@ -64,7 +97,11 @@
         LineEChart,
         barEChart,
         pieEChart,
-        radarEChart
+        radarEChart,
+        Carousel,
+        Panel,
+        Select,
+        Option
       },
       data () {
         return {
@@ -104,7 +141,7 @@
               }
             }
           ],
-          table_data: [
+          table_data1: [
             {
               id: '100',
               name: 'John Brown',
@@ -139,6 +176,64 @@
                   ]
                 }
               ]
+            },
+            {
+              id: '101',
+              name: 'Jim Green',
+              age: 24,
+              address: 'London No. 1 Lake Park',
+              date: '2016-10-01'
+            },
+            {
+              id: '102',
+              name: 'Joe Black',
+              age: 30,
+              address: 'Sydney No. 1 Lake Park',
+              date: '2016-10-02'
+            },
+            {
+              id: '103',
+              name: 'Jon Snow',
+              age: 26,
+              address: 'Ottawa No. 2 Lake Park',
+              date: '2016-10-04'
+            }
+          ],
+          columns2: [
+            {
+              title: 'Name',
+              key: 'name',
+              tree: true
+            },
+            {
+              title: 'Age',
+              key: 'age'
+            },
+            {
+              title: 'Address',
+              key: 'address',
+              render: (h, params) => {
+                // console.log('h', h)
+                // console.log('params', params)
+                const row = params.row
+                const text = row.status === 1 ? 'Working' : row.status === 2 ? 'Success' : 'Fail'
+                //
+                return h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  }
+                }, text)
+              }
+            }
+          ],
+          table_data2: [
+            {
+              id: '100',
+              name: 'John Brown',
+              age: 18,
+              address: 'New York No. 1 Lake Park',
+              date: '2016-10-03'
             },
             {
               id: '101',

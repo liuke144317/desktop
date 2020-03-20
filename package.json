@@ -1,5 +1,5 @@
 {
-  "name": "X-WebDesktop-Vue",
+  "name": "desktop",
   "version": "3.0.1",
   "description": "The WebDesktop system based on Vue",
   "author": "OXOYO",
@@ -31,6 +31,7 @@
     "view-design": "^4.1.3",
     "viewerjs": "^1.2.0",
     "vue": "^2.3.3",
+    "vue-piczoom": "^1.0.6",
     "vue-resource": "^1.5.1",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1",
