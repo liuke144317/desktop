@@ -10,7 +10,7 @@
         <ModalBox :data = "data1" @cancel="cancel" @ok="ok"></ModalBox>
         <Dialog :data = "data2">
           <div slot="body">
-            <dataTable :columns="columns1" :data="table_data"></dataTable>
+            <dataTable :columns="columns1" :data="table_data1"></dataTable>
           </div>
         </Dialog>
         <Spin fix v-if="spinShow">
@@ -67,26 +67,44 @@
       <TabPane label="带放大功能的轮播" tab="tab1">
         <Carousel style="width: 100%"></Carousel>
       </TabPane>
+      <TabPane label="双层tabs" tab="tab1">
+        <div style="width: 100%;height: 100%;overflow: hidden;">
+          <Tabs :animated="false" name="tab1-1">
+            <TabPane label="数据表格1" tab="tab1-1">1</TabPane>
+            <TabPane label="数据表格2" tab="tab1-1">2</TabPane>
+          </Tabs>
+        </div>
+      </TabPane>
       <TabPane label="panel" tab="tab1">
-        <div style="width: 100%;height: 100%;background: #609ad9;overflow: hidden;">
-          <Panel></Panel>
+        <div style="width: 100%;height: 100%;background:blanchedalmond;overflow: hidden;">
+          <Tabs :animated="false" name="tab1-1">
+            <TabPane label="panel-style1" tab="tab1-1">
+              <PanelStyle1>
+                <div>123</div>
+              </PanelStyle1>
+            </TabPane>
+            <TabPane label="panel-style2" tab="tab1-1">
+              <PanelStyle2 title="采集项目分类信息">123</PanelStyle2>
+            </TabPane>
+          </Tabs>
         </div>
       </TabPane>
     </Tabs>
   </div>
 </template>
 <script>
-    import ModalBox from '@/platform/chunks/Modal/confirm/Index.vue'
-    import Dialog from '@/platform/chunks/Modal/dialog/Index.vue'
-    import dataTable from '@/platform/chunks/DataTable/Index.vue'
+    import ModalBox from '@/platform/chunks/Modal/confirm/Index'
+    import Dialog from '@/platform/chunks/Modal/dialog/Index'
+    import dataTable from '@/platform/chunks/DataTable/Index'
     import {Spin, Select, Option} from 'view-design'
-    import LineEChart from '@/platform/chunks/ECharts/lineChart.vue'
-    import barEChart from '@/platform/chunks/ECharts/barChart.vue'
-    import pieEChart from '@/platform/chunks/ECharts/pieChart.vue'
-    import radarEChart from '@/platform/chunks/ECharts/radarChart.vue'
-    import Carousel from '@/platform/chunks/Carousel/Index.vue'
+    import LineEChart from '@/platform/chunks/ECharts/lineChart'
+    import barEChart from '@/platform/chunks/ECharts/barChart'
+    import pieEChart from '@/platform/chunks/ECharts/pieChart'
+    import radarEChart from '@/platform/chunks/ECharts/radarChart'
+    import Carousel from '@/platform/chunks/Carousel/Index'
+    import PanelStyle1 from '@/platform/chunks/Panel/panel-style1/Index'
+    import PanelStyle2 from '@/platform/chunks/Panel/panel-style2/Index'
     import AMap from 'AMap'
-    import Panel from '@/platform/chunks/Panel/Index.vue'
     export default {
       name: 'Index',
       components: {
@@ -99,9 +117,10 @@
         pieEChart,
         radarEChart,
         Carousel,
-        Panel,
         Select,
-        Option
+        Option,
+        PanelStyle1,
+        PanelStyle2
       },
       data () {
         return {
@@ -127,8 +146,6 @@
               title: 'Address',
               key: 'address',
               render: (h, params) => {
-                // console.log('h', h)
-                // console.log('params', params)
                 const row = params.row
                 const text = row.status === 1 ? 'Working' : row.status === 2 ? 'Success' : 'Fail'
                 //
